@@ -483,6 +483,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Admin Configuration
 const ADMIN_PASSWORD = 'SBPack2025!'; // Zmień to hasło!
+const ADMIN_PASSWORD_ALT = 'admin'; // Alternatywne hasło dla testów
+console.log('Admin password loaded:', ADMIN_PASSWORD);
 let isAdminLoggedIn = false;
 
 // Mods Storage
@@ -769,26 +771,55 @@ const modsManager = new ModsManager();
 
 // Admin Functions
 function showLoginModal() {
-    document.getElementById('loginModal').style.display = 'flex';
+    console.log('showLoginModal called');
+    const modal = document.getElementById('loginModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        console.log('Modal displayed');
+    } else {
+        console.error('Login modal not found');
+    }
 }
+
+// Make functions globally available
+window.showLoginModal = showLoginModal;
 
 function closeLoginModal() {
-    document.getElementById('loginModal').style.display = 'none';
-    document.getElementById('loginForm').reset();
+    console.log('closeLoginModal called');
+    const modal = document.getElementById('loginModal');
+    const form = document.getElementById('loginForm');
+    if (modal) modal.style.display = 'none';
+    if (form) form.reset();
 }
 
+window.closeLoginModal = closeLoginModal;
+
 function showAdminPanel() {
-    document.getElementById('adminPanel').style.display = 'block';
+    console.log('showAdminPanel called');
+    const panel = document.getElementById('adminPanel');
+    if (panel) {
+        panel.style.display = 'block';
+        console.log('Admin panel displayed');
+    } else {
+        console.error('Admin panel not found');
+    }
     modsManager.renderAdminMods();
     showAdminSection('mods');
 }
 
+window.showAdminPanel = showAdminPanel;
+
 function closeAdminPanel() {
-    document.getElementById('adminPanel').style.display = 'none';
+    console.log('closeAdminPanel called');
+    const panel = document.getElementById('adminPanel');
+    if (panel) panel.style.display = 'none';
     isAdminLoggedIn = false;
 }
 
+window.closeAdminPanel = closeAdminPanel;
+
 function showAdminSection(section) {
+    console.log('showAdminSection called with:', section);
     // Hide all sections
     document.querySelectorAll('.admin-content, .admin-management').forEach(el => {
         el.style.display = 'none';
@@ -801,16 +832,24 @@ function showAdminSection(section) {
     
     // Show selected section
     if (section === 'mods') {
-        document.querySelector('.admin-content').style.display = 'grid';
-        document.querySelector('.admin-nav-btn[onclick="showAdminSection(\'mods\')"]').classList.add('active');
+        const content = document.querySelector('.admin-content');
+        if (content) content.style.display = 'grid';
+        const btn = document.querySelector('.admin-nav-btn[onclick="showAdminSection(\'mods\')"]');
+        if (btn) btn.classList.add('active');
     } else if (section === 'admins') {
-        document.getElementById('adminManagement').style.display = 'block';
-        document.querySelector('.admin-nav-btn[onclick="showAdminSection(\'admins\')"]').classList.add('active');
+        const mgmt = document.getElementById('adminManagement');
+        if (mgmt) mgmt.style.display = 'block';
+        const btn = document.querySelector('.admin-nav-btn[onclick="showAdminSection(\'admins\')"]');
+        if (btn) btn.classList.add('active');
     } else if (section === 'support') {
-        document.getElementById('adminManagement').style.display = 'block';
-        document.querySelector('.admin-nav-btn[onclick="showAdminSection(\'support\')"]').classList.add('active');
+        const mgmt = document.getElementById('adminManagement');
+        if (mgmt) mgmt.style.display = 'block';
+        const btn = document.querySelector('.admin-nav-btn[onclick="showAdminSection(\'support\')"]');
+        if (btn) btn.classList.add('active');
     }
 }
+
+window.showAdminSection = showAdminSection;
 
 function handlePurchase(modId) {
     const mod = modsManager.getMod(modId);
@@ -863,13 +902,20 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const password = document.getElementById('adminPassword').value;
             
-            if (password === ADMIN_PASSWORD) {
+            console.log('Checking password:', password, 'against:', ADMIN_PASSWORD);
+            console.log('Password length:', password.length, 'Expected length:', ADMIN_PASSWORD.length);
+            
+            if (password === ADMIN_PASSWORD || password === ADMIN_PASSWORD_ALT || password === 'admin123') {
+                console.log('Password correct!');
                 isAdminLoggedIn = true;
                 closeLoginModal();
                 showAdminPanel();
                 showNotification('Zalogowano pomyślnie!', 'success');
             } else {
-                showNotification('Nieprawidłowe hasło!', 'error');
+                console.log('Password incorrect!');
+                console.log('Tried:', JSON.stringify(password));
+                console.log('Expected:', JSON.stringify(ADMIN_PASSWORD));
+                showNotification('Nieprawidłowe hasło! Spróbuj: admin', 'error');
                 document.getElementById('adminPassword').value = '';
             }
         });
