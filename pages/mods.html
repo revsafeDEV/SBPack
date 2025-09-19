@@ -1,31 +1,68 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" class="modern-theme">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mody FiveM - SBPack | revsafeDEV</title>
-    <meta name="description" content="Przeglądaj i pobierz najlepsze mody FiveM. Skrypty, pojazdy, mapy, skiny i więcej dla Twojego serwera.">
-    <link rel="stylesheet" href="../assets/css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Premium Mody FiveM - SBPack | revsafeDEV</title>
+    <meta name="description" content="Odkryj najnowocześniejsze mody FiveM. Premium skrypty, pojazdy, mapy i zasoby dla profesjonalnych serwerów gaming.">
+    <meta name="keywords" content="FiveM, mody, skrypty, pojazdy, mapy, GTA V, roleplay, serwer, premium, gaming, ESX, QBCore">
+    <link rel="stylesheet" href="../assets/css/styles-new.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="logo" ondblclick="showLoginModal()" title="Podwójny klik dla dostępu administratora">
-                <i class="fas fa-gamepad"></i>
-                <span>SBPack</span>
+<body class="modern-body">
+    <!-- Modern Header -->
+    <header class="modern-header">
+        <div class="header-container">
+            <div class="logo-section" ondblclick="showLoginModal()" title="Podwójny klik dla dostępu administratora">
+                <div class="logo-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="brand-name">SBPack</span>
+                    <span class="brand-subtitle">by revsafeDEV</span>
+                </div>
             </div>
-            <nav class="nav">
-                <a href="../index.html" class="nav-link">Główna</a>
-                <a href="mods.html" class="nav-link active">Mody</a>
-                <a href="support.html" class="nav-link">Support</a>
-                <a href="support-chat.html" class="nav-link">Chat Support</a>
-                <a href="contact.html" class="nav-link">Kontakt</a>
+            
+            <nav class="modern-nav">
+                <div class="nav-items">
+                    <a href="../index.html" class="nav-item">
+                        <i class="fas fa-home"></i>
+                        <span>Główna</span>
+                    </a>
+                    <a href="mods.html" class="nav-item active">
+                        <i class="fas fa-puzzle-piece"></i>
+                        <span>Mody</span>
+                    </a>
+                    <a href="support.html" class="nav-item">
+                        <i class="fas fa-life-ring"></i>
+                        <span>Support</span>
+                    </a>
+                    <a href="support-chat.html" class="nav-item">
+                        <i class="fas fa-comments"></i>
+                        <span>Chat</span>
+                    </a>
+                    <a href="contact.html" class="nav-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>Kontakt</span>
+                    </a>
+                </div>
             </nav>
-            <div class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
+            
+            <div class="header-actions">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu-toggle">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
             </div>
         </div>
     </header>
@@ -125,74 +162,134 @@
         </div>
     </div>
 
-    <!-- Mods Section -->
-    <section class="mods-section">
-        <div class="container">
-            <h1>Nasze Mody</h1>
-            <p class="section-description">Odkryj kolekcję wysokiej jakości modów, skryptów i dodatków dla FiveM. Wszystkie mody są sprawdzone, bezpieczne i gotowe do użycia na Twoim serwerze.</p>
+    <!-- Modern Mods Section -->
+    <section class="modern-mods-section">
+        <div class="mods-container">
+            <!-- Hero Header -->
+            <div class="mods-hero">
+                <div class="section-badge">
+                    <span class="badge-dot"></span>
+                    <span class="badge-text">Premium Collection</span>
+                </div>
+                
+                <h1 class="mods-title">
+                    <span class="title-line-1">Profesjonalne</span>
+                    <span class="title-line-2">Mody FiveM</span>
+                </h1>
+                
+                <p class="mods-description">
+                    Odkryj najnowocześniejszą kolekcję modów FiveM. Każdy skrypt jest 
+                    profesjonalnie przygotowany, bezpieczny i zoptymalizowany dla wydajności.
+                </p>
+                
+                <!-- Advanced Search -->
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="modern-search-input" placeholder="Szukaj modów, skryptów, pojazdów..." id="modsSearchInput">
+                        <button class="search-clear-btn" id="searchClearBtn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="search-suggestions" id="searchSuggestions"></div>
+                </div>
+            </div>
             
-            <!-- Filter Buttons -->
-            <div class="filter-buttons">
-                <button class="filter-btn active" data-filter="all">
-                    <i class="fas fa-th"></i>
-                    Wszystkie
-                </button>
-                <button class="filter-btn" data-filter="skrypty">
-                    <i class="fas fa-code"></i>
-                    Skrypty
-                </button>
-                <button class="filter-btn" data-filter="pojazdy">
-                    <i class="fas fa-car"></i>
-                    Pojazdy
-                </button>
-                <button class="filter-btn" data-filter="mapy">
-                    <i class="fas fa-map"></i>
-                    Mapy
-                </button>
-                <button class="filter-btn" data-filter="skins">
-                    <i class="fas fa-tshirt"></i>
-                    Skiny
-                </button>
-                <button class="filter-btn" data-filter="free">
-                    <i class="fas fa-gift"></i>
-                    Darmowe
-                </button>
+            <!-- Modern Filter Buttons -->
+            <div class="modern-filter-section">
+                <div class="filter-header">
+                    <h3 class="filter-title">Kategorie</h3>
+                    <span class="filter-count" id="filterCount">Wszystkie mody</span>
+                </div>
+                
+                <div class="modern-filter-buttons">
+                    <button class="modern-filter-btn active" data-filter="all">
+                        <div class="filter-icon">🎨</div>
+                        <span class="filter-text">Wszystkie</span>
+                        <span class="filter-badge" data-count="all">0</span>
+                    </button>
+                    <button class="modern-filter-btn" data-filter="skrypty">
+                        <div class="filter-icon">💻</div>
+                        <span class="filter-text">Skrypty</span>
+                        <span class="filter-badge" data-count="skrypty">0</span>
+                    </button>
+                    <button class="modern-filter-btn" data-filter="pojazdy">
+                        <div class="filter-icon">🏎️</div>
+                        <span class="filter-text">Pojazdy</span>
+                        <span class="filter-badge" data-count="pojazdy">0</span>
+                    </button>
+                    <button class="modern-filter-btn" data-filter="mapy">
+                        <div class="filter-icon">🗺️</div>
+                        <span class="filter-text">Mapy</span>
+                        <span class="filter-badge" data-count="mapy">0</span>
+                    </button>
+                    <button class="modern-filter-btn" data-filter="skins">
+                        <div class="filter-icon">👕</div>
+                        <span class="filter-text">Skiny</span>
+                        <span class="filter-badge" data-count="skins">0</span>
+                    </button>
+                    <button class="modern-filter-btn" data-filter="free">
+                        <div class="filter-icon">🎁</div>
+                        <span class="filter-text">Darmowe</span>
+                        <span class="filter-badge" data-count="free">0</span>
+                    </button>
+                </div>
+                
+                <!-- Sort Options -->
+                <div class="sort-options">
+                    <select class="modern-select" id="sortSelect">
+                        <option value="newest">Najnowsze</option>
+                        <option value="popular">Najpopularniejsze</option>
+                        <option value="price-low">Cena: od najniższej</option>
+                        <option value="price-high">Cena: od najwyższej</option>
+                        <option value="rating">Najwyżej oceniane</option>
+                    </select>
+                </div>
             </div>
 
-            <!-- Stats -->
+            
+            <!-- Modern Stats Grid -->
             <div class="stats-grid">
                 <div class="stat-card">
-                    <i class="fas fa-download"></i>
-                    <div class="stat-number" id="totalDownloads">5,039</div>
-                    <div class="stat-label">Pobrań</div>
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-content">
+                        <span class="stat-number" id="totalDownloads">5,239</span>
+                        <span class="stat-label">Total Downloads</span>
+                    </div>
                 </div>
                 <div class="stat-card">
-                    <i class="fas fa-gamepad"></i>
-                    <div class="stat-number" id="totalMods">4</div>
-                    <div class="stat-label">Modów</div>
+                    <div class="stat-icon">🎮</div>
+                    <div class="stat-content">
+                        <span class="stat-number" id="totalMods">48</span>
+                        <span class="stat-label">Aktywnych Modów</span>
+                    </div>
                 </div>
                 <div class="stat-card">
-                    <i class="fas fa-users"></i>
-                    <div class="stat-number">1,250</div>
-                    <div class="stat-label">Zadowolonych klientów</div>
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-content">
+                        <span class="stat-number">4.9/5</span>
+                        <span class="stat-label">Średnia Ocena</span>
+                    </div>
                 </div>
                 <div class="stat-card">
-                    <i class="fas fa-star"></i>
-                    <div class="stat-number">4.9</div>
-                    <div class="stat-label">Ocena</div>
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-content">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Zadowolonych Użytkowników</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Mods Grid -->
-            <div id="modsGrid" class="mods-grid">
+            <!-- Modern Mods Grid -->
+            <div id="modsGrid" class="modern-mods-grid">
                 <!-- Mods will be loaded here by JavaScript -->
             </div>
 
-            <!-- Load More Button -->
-            <div class="load-more-container" style="display: none;">
-                <button class="btn btn-secondary load-more-btn">
-                    <i class="fas fa-plus"></i>
-                    Załaduj więcej modów
+            <!-- Load More Section -->
+            <div class="load-more-section" style="display: none;">
+                <button class="load-more-btn">
+                    <i class="fas fa-chevron-down"></i>
+                    <span>Załaduj więcej modów</span>
                 </button>
             </div>
         </div>

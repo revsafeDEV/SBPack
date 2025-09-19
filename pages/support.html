@@ -1,31 +1,68 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" class="modern-theme">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wsparcie - SBPack | revsafeDEV</title>
-    <meta name="description" content="Znajdź odpowiedzi na najczęściej zadawane pytania lub skontaktuj się z naszym zespołem wsparcia technicznego.">
-    <link rel="stylesheet" href="../assets/css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Premium Support - SBPack | revsafeDEV</title>
+    <meta name="description" content="Profesjonalne wsparcie 24/7. FAQ, pomoc techniczna i dedykowane rozwiązania dla użytkowników SBPack.">
+    <meta name="keywords" content="FiveM support, pomoc techniczna, FAQ, wsparcie, troubleshooting">
+    <link rel="stylesheet" href="../assets/css/styles-new.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="logo" ondblclick="showLoginModal()" title="Podwójny klik dla dostępu administratora">
-                <i class="fas fa-gamepad"></i>
-                <span>SBPack</span>
+<body class="modern-body">
+    <!-- Modern Header -->
+    <header class="modern-header">
+        <div class="header-container">
+            <div class="logo-section" ondblclick="showLoginModal()" title="Podwójny klik dla dostępu administratora">
+                <div class="logo-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="brand-name">SBPack</span>
+                    <span class="brand-subtitle">by revsafeDEV</span>
+                </div>
             </div>
-            <nav class="nav">
-                <a href="../index.html" class="nav-link">Główna</a>
-                <a href="mods.html" class="nav-link">Mody</a>
-                <a href="support.html" class="nav-link active">Support</a>
-                <a href="support-chat.html" class="nav-link">Chat Support</a>
-                <a href="contact.html" class="nav-link">Kontakt</a>
+            
+            <nav class="modern-nav">
+                <div class="nav-items">
+                    <a href="../index.html" class="nav-item">
+                        <i class="fas fa-home"></i>
+                        <span>Główna</span>
+                    </a>
+                    <a href="mods.html" class="nav-item">
+                        <i class="fas fa-puzzle-piece"></i>
+                        <span>Mody</span>
+                    </a>
+                    <a href="support.html" class="nav-item active">
+                        <i class="fas fa-life-ring"></i>
+                        <span>Support</span>
+                    </a>
+                    <a href="support-chat.html" class="nav-item">
+                        <i class="fas fa-comments"></i>
+                        <span>Chat</span>
+                    </a>
+                    <a href="contact.html" class="nav-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>Kontakt</span>
+                    </a>
+                </div>
             </nav>
-            <div class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
+            
+            <div class="header-actions">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu-toggle">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
             </div>
         </div>
     </header>
@@ -49,212 +86,359 @@
         </div>
     </div>
 
-    <!-- Support Section -->
-    <section class="support-section">
-        <div class="container">
-            <div class="support-header">
-                <h1>Centrum Wsparcia</h1>
-                <p>Znajdź odpowiedzi na najczęściej zadawane pytania lub skontaktuj się z naszym zespołem wsparcia technicznego</p>
+    <!-- Modern Support Section -->
+    <section class="modern-support-section">
+        <div class="support-container">
+            <!-- Support Hero -->
+            <div class="support-hero">
+                <div class="section-badge">
+                    <span class="badge-dot"></span>
+                    <span class="badge-text">24/7 Premium Support</span>
+                </div>
+                
+                <h1 class="support-title">
+                    <span class="title-line-1">Centrum</span>
+                    <span class="title-line-2">Wsparcia</span>
+                </h1>
+                
+                <p class="support-description">
+                    Profesjonalne wsparcie techniczne dla wszystkich użytkowników SBPack. 
+                    Szybka pomoc, szczegółowa dokumentacja i dedykowane rozwiązania.
+                </p>
+
+                <!-- Quick Support Options -->
+                <div class="quick-support-grid">
+                    <a href="#faq" class="quick-support-card">
+                        <div class="support-icon">📚</div>
+                        <h3>FAQ</h3>
+                        <p>Najczęściej zadawane pytania</p>
+                    </a>
+                    <a href="support-chat.html" class="quick-support-card">
+                        <div class="support-icon">💬</div>
+                        <h3>Live Chat</h3>
+                        <p>Rozmowa w czasie rzeczywistym</p>
+                    </a>
+                    <a href="#contact-form" class="quick-support-card">
+                        <div class="support-icon">📧</div>
+                        <h3>Email Support</h3>
+                        <p>Szczegółowe zapytania</p>
+                    </a>
+                    <a href="contact.html" class="quick-support-card">
+                        <div class="support-icon">📞</div>
+                        <h3>Contact</h3>
+                        <p>Informacje kontaktowe</p>
+                    </a>
+                </div>
             </div>
 
-            <div class="support-content">
-                <!-- FAQ Section -->
-                <div class="faq-section">
-                    <h2>Najczęściej zadawane pytania</h2>
+            <!-- Modern FAQ Section -->
+            <div id="faq" class="modern-faq-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="title-line-1">Najczęściej</span>
+                        <span class="title-line-2">Zadawane Pytania</span>
+                    </h2>
                     
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <span>Jak zainstalować mod na serwerze FiveM?</span>
-                            <i class="fas fa-chevron-down"></i>
+                    <p class="section-description">
+                        Znajdź szybkie odpowiedzi na najpopularniejsze pytania dotyczące 
+                        instalacji, konfiguracji i rozwiązywania problemów.
+                    </p>
+                </div>
+
+                <div class="faq-grid">
+                    <div class="faq-category">
+                        <h3 class="faq-category-title">
+                            <i class="fas fa-download"></i>
+                            Instalacja
+                        </h3>
+                        
+                        <div class="modern-faq-item">
+                            <div class="faq-question">
+                                <span>Jak zainstalować mod na serwerze FiveM?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="answer-content">
+                                    <p>Proces instalacji moda na serwerze FiveM:</p>
+                                    <div class="step-by-step">
+                                        <div class="step">
+                                            <div class="step-number">1</div>
+                                            <div class="step-content">
+                                                <h4>Pobierz mod</h4>
+                                                <p>Ściągnij plik moda z naszej strony po zakupie</p>
+                                            </div>
+                                        </div>
+                                        <div class="step">
+                                            <div class="step-number">2</div>
+                                            <div class="step-content">
+                                                <h4>Wypakuj pliki</h4>
+                                                <p>Rozpakuj archivum do folderu <code>resources</code> na serwerze</p>
+                                            </div>
+                                        </div>
+                                        <div class="step">
+                                            <div class="step-number">3</div>
+                                            <div class="step-content">
+                                                <h4>Konfiguracja</h4>
+                                                <p>Dodaj <code>start nazwa_moda</code> do pliku server.cfg</p>
+                                            </div>
+                                        </div>
+                                        <div class="step">
+                                            <div class="step-number">4</div>
+                                            <div class="step-content">
+                                                <h4>Restart serwera</h4>
+                                                <p>Zrestartuj serwer i sprawdź konsole pod kątem błędów</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="faq-answer">
-                            <p>Aby zainstalować mod na serwerze FiveM:</p>
-                            <ol>
-                                <li>Pobierz plik moda z naszej strony</li>
-                                <li>Wypakuj archiwum do folderu resources na serwerze</li>
-                                <li>Dodaj linię <code>start nazwa_moda</code> do pliku server.cfg</li>
-                                <li>Zrestartuj serwer</li>
-                                <li>Sprawdź konsolę serwera pod kątem błędów</li>
-                            </ol>
+
+                        <div class="modern-faq-item">
+                            <div class="faq-question">
+                                <span>Jakie są wymagania systemowe?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="answer-content">
+                                    <h4>Minimalne wymagania:</h4>
+                                    <ul class="requirements-list">
+                                        <li><i class="fas fa-server"></i> Serwer FiveM (najnowsza wersja)</li>
+                                        <li><i class="fas fa-code-branch"></i> Framework ESX (dla większości skryptów)</li>
+                                        <li><i class="fas fa-database"></i> Baza danych MySQL</li>
+                                        <li><i class="fas fa-memory"></i> Minimum 2GB RAM</li>
+                                        <li><i class="fas fa-wifi"></i> Stabilne połączenie internetowe</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <span>Czy mody są kompatybilne z ESX?</span>
-                            <i class="fas fa-chevron-down"></i>
+                    <div class="faq-category">
+                        <h3 class="faq-category-title">
+                            <i class="fas fa-cog"></i>
+                            Konfiguracja
+                        </h3>
+                        
+                        <div class="modern-faq-item">
+                            <div class="faq-question">
+                                <span>Czy mody są kompatybilne z ESX?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="answer-content">
+                                    <p>Większość naszych skryptów jest w pełni kompatybilna z frameworkiem ESX Legacy. 
+                                       W opisie każdego moda znajdziesz szczegółowe informacje o wymaganiach:</p>
+                                    
+                                    <div class="compatibility-badges">
+                                        <span class="compat-badge esx">✅ ESX Legacy</span>
+                                        <span class="compat-badge qb">✅ QBCore</span>
+                                        <span class="compat-badge vrp">⚠️ vRP (na żądanie)</span>
+                                        <span class="compat-badge standalone">✅ Standalone</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="faq-answer">
-                            <p>Większość naszych skryptów jest kompatybilna z frameworkiem ESX. W opisie każdego moda znajdziesz informacje o wymaganiach i kompatybilności. Jeśli masz wątpliwości, skontaktuj się z naszym zespołem wsparcia.</p>
+
+                        <div class="modern-faq-item">
+                            <div class="faq-question">
+                                <span>Jak skonfigurować bazę danych?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="answer-content">
+                                    <p>Konfiguracja bazy danych dla modów SBPack:</p>
+                                    <div class="code-example">
+                                        <div class="code-header">
+                                            <span class="code-title">server.cfg</span>
+                                            <button class="copy-btn">📋</button>
+                                        </div>
+                                        <code class="code-block">
+set mysql_connection_string "mysql://user:password@localhost/database"
+                                        </code>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <span>Jak otrzymać zwrot pieniędzy?</span>
-                            <i class="fas fa-chevron-down"></i>
+                    <div class="faq-category">
+                        <h3 class="faq-category-title">
+                            <i class="fas fa-credit-card"></i>
+                            Płatności
+                        </h3>
+                        
+                        <div class="modern-faq-item">
+                            <div class="faq-question">
+                                <span>Jak otrzymać zwrot pieniędzy?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="answer-content">
+                                    <p>Oferujemy <strong>30-dniową gwarancję zwrotu pieniędzy</strong> bez podawania przyczyny:</p>
+                                    
+                                    <div class="refund-process">
+                                        <div class="process-step">
+                                            <i class="fas fa-clock"></i>
+                                            <span>Skontaktuj się w ciągu 30 dni</span>
+                                        </div>
+                                        <div class="process-step">
+                                            <i class="fas fa-file-alt"></i>
+                                            <span>Podaj numer transakcji PayPal</span>
+                                        </div>
+                                        <div class="process-step">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Zwrot w 3-5 dni roboczych</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="faq-answer">
-                            <p>Oferujemy 30-dniową gwarancję zwrotu pieniędzy. Aby otrzymać zwrot:</p>
-                            <ul>
-                                <li>Skontaktuj się z nami w ciągu 30 dni od zakupu</li>
-                                <li>Opisz powód zwrotu</li>
-                                <li>Podaj numer transakcji PayPal</li>
-                                <li>Zwrot zostanie przetworzony w ciągu 3-5 dni roboczych</li>
-                            </ul>
-                        </div>
-                    </div>
 
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <span>Jak uzyskać pomoc techniczną?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Dostępne są następujące kanały wsparcia:</p>
-                            <ul>
-                                <li><strong>Discord:</strong> sebablyqt - szybka pomoc w czasie rzeczywistym</li>
-                                <li><strong>Email:</strong> revsafe777@gmail.com - dla bardziej złożonych problemów</li>
-                                <li><strong>Formularz wsparcia:</strong> poniżej na tej stronie</li>
-                                <li><strong>Chat na żywo:</strong> dostępny na stronie Chat Support</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <span>Czy otrzymam aktualizacje modów?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Tak! Wszyscy klienci otrzymują darmowe aktualizacje modów, które zakupili. Aktualizacje obejmują poprawki błędów, nowe funkcje i kompatybilność z najnowszymi wersjami FiveM.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <span>Jakie są wymagania systemowe?</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Podstawowe wymagania:</p>
-                            <ul>
-                                <li>Serwer FiveM (najnowsza wersja zalecana)</li>
-                                <li>Framework ESX (dla większości skryptów)</li>
-                                <li>Baza danych MySQL</li>
-                                <li>Minimum 2GB RAM dla serwera</li>
-                                <li>Stabilne połączenie internetowe</li>
-                            </ul>
+                        <div class="modern-faq-item">
+                            <div class="faq-question">
+                                <span>Czy otrzymam aktualizacje modów?</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <div class="answer-content">
+                                    <p><strong>Tak!</strong> Wszyscy klienci otrzymują darmowe aktualizacje na zawsze:</p>
+                                    <ul class="update-features">
+                                        <li>🔄 Poprawki błędów</li>
+                                        <li>✨ Nowe funkcje</li>
+                                        <li>🔧 Kompatybilność z nowymi wersjami FiveM</li>
+                                        <li>🛡️ Aktualizacje bezpieczeństwa</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Support Form -->
-                <div class="support-form-section">
-                    <h2>Formularz Wsparcia</h2>
-                    <p>Nie znalazłeś odpowiedzi? Wyślij nam szczegółowe pytanie</p>
+            <!-- Modern Contact Form -->
+            <div id="contact-form" class="modern-contact-form">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <span class="title-line-1">Nie znalazłeś</span>
+                        <span class="title-line-2">odpowiedzi?</span>
+                    </h2>
                     
-                    <form id="supportForm" class="contact-form">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="supportName">Imię i nazwisko *</label>
-                                <input type="text" id="supportName" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="supportEmail">Email *</label>
-                                <input type="email" id="supportEmail" required>
-                            </div>
-                        </div>
+                    <p class="section-description">
+                        Wyślij nam szczegółowe zapytanie, a nasz zespół odpowie w ciągu 24 godzin.
+                    </p>
+                </div>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="supportPriority">Priorytet *</label>
-                                <select id="supportPriority" required>
-                                    <option value="">Wybierz priorytet</option>
-                                    <option value="low">Niski - Ogólne pytania</option>
-                                    <option value="medium">Normalny - Pomoc techniczna</option>
-                                    <option value="high">Wysoki - Problem z modami</option>
-                                    <option value="urgent">Pilny - Serwer nie działa</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="supportCategory">Kategoria *</label>
-                                <select id="supportCategory" required>
-                                    <option value="">Wybierz kategorię</option>
-                                    <option value="technical">Pomoc techniczna</option>
-                                    <option value="billing">Płatności i rozliczenia</option>
-                                    <option value="installation">Instalacja modów</option>
-                                    <option value="bug">Zgłaszanie błędów</option>
-                                    <option value="feature">Propozycje ulepszeń</option>
-                                    <option value="other">Inne</option>
-                                </select>
-                            </div>
-                        </div>
-
+                <form id="supportForm" class="modern-form">
+                    <div class="form-grid">
                         <div class="form-group">
-                            <label for="supportSubject">Temat *</label>
-                            <input type="text" id="supportSubject" placeholder="Krótko opisz problem" required>
+                            <label for="supportName">Imię i nazwisko *</label>
+                            <input type="text" id="supportName" required>
                         </div>
-
+                        
                         <div class="form-group">
-                            <label for="supportDescription">Szczegółowy opis problemu *</label>
-                            <textarea id="supportDescription" rows="6" placeholder="Opisz szczegółowo swój problem, załącz informacje o błędach z konsoli, wersji serwera itp." required></textarea>
+                            <label for="supportEmail">Email *</label>
+                            <input type="email" id="supportEmail" required>
                         </div>
+                    </div>
 
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-paper-plane"></i>
-                            Wyślij zgłoszenie
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="supportPriority">Priorytet *</label>
+                            <select id="supportPriority" required>
+                                <option value="">Wybierz priorytet</option>
+                                <option value="low">🟢 Niski - Ogólne pytania</option>
+                                <option value="medium">🟡 Normalny - Pomoc techniczna</option>
+                                <option value="high">🟠 Wysoki - Problem z modami</option>
+                                <option value="urgent">🔴 Pilny - Serwer nie działa</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="supportCategory">Kategoria *</label>
+                            <select id="supportCategory" required>
+                                <option value="">Wybierz kategorię</option>
+                                <option value="technical">🔧 Pomoc techniczna</option>
+                                <option value="billing">💳 Płatności i rozliczenia</option>
+                                <option value="installation">📥 Instalacja modów</option>
+                                <option value="bug">🐛 Zgłaszanie błędów</option>
+                                <option value="feature">💡 Propozycje ulepszeń</option>
+                                <option value="other">📋 Inne</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="supportSubject">Temat *</label>
+                        <input type="text" id="supportSubject" placeholder="Krótko opisz problem" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="supportDescription">Szczegółowy opis problemu *</label>
+                        <textarea id="supportDescription" rows="6" placeholder="Opisz problem jak najdokładniej. Dołącz informacje o wersji serwera, błędach w konsoli, krokach które doprowadziły do problemu..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="supportFiles">Załącz pliki (opcjonalnie)</label>
+                        <div class="file-upload-area">
+                            <input type="file" id="supportFiles" multiple accept=".txt,.log,.lua,.cfg,.md">
+                            <div class="file-upload-content">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Przeciągnij pliki tutaj lub kliknij aby wybrać</span>
+                                <small>Obsługiwane formaty: .txt, .log, .lua, .cfg, .md (max 10MB)</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="modern-btn primary-btn">
+                            <span class="btn-icon">📨</span>
+                            <span class="btn-text">Wyślij zapytanie</span>
                         </button>
-                    </form>
-                </div>
+                        
+                        <button type="reset" class="modern-btn secondary-btn">
+                            <span class="btn-icon">🔄</span>
+                            <span class="btn-text">Wyczyść formularz</span>
+                        </button>
+                    </div>
+                </form>
             </div>
 
-            <!-- Quick Links -->
-            <div class="support-links">
-                <h2>Dodatkowe zasoby</h2>
-                <div class="links-grid">
-                    <a href="support-chat.html" class="support-link">
-                        <i class="fas fa-comments"></i>
-                        <h3>Chat na żywo</h3>
-                        <p>Szybka pomoc w czasie rzeczywistym</p>
-                    </a>
-                    <a href="contact.html" class="support-link">
-                        <i class="fas fa-envelope"></i>
-                        <h3>Kontakt</h3>
-                        <p>Skontaktuj się z naszym zespołem</p>
-                    </a>
-                    <a href="https://discord.gg/fivem" target="_blank" class="support-link">
-                        <i class="fab fa-discord"></i>
-                        <h3>Discord</h3>
-                        <p>Dołącz do naszej społeczności</p>
-                    </a>
-                    <a href="https://github.com/revsafeDEV" target="_blank" class="support-link">
-                        <i class="fab fa-github"></i>
-                        <h3>GitHub</h3>
-                        <p>Sprawdź nasze projekty open source</p>
-                    </a>
+            <!-- Support Stats -->
+            <div class="support-stats">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">⚡</div>
+                        <div class="stat-content">
+                            <span class="stat-number">< 2h</span>
+                            <span class="stat-label">Średni czas odpowiedzi</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-content">
+                            <span class="stat-number">98%</span>
+                            <span class="stat-label">Rozwiązanych problemów</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-content">
+                            <span class="stat-number">4.9/5</span>
+                            <span class="stat-label">Ocena wsparcia</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🏆</div>
+                        <div class="stat-content">
+                            <span class="stat-number">500+</span>
+                            <span class="stat-label">Zadowolonych klientów</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-left">
-                    <div class="logo">
-                        <i class="fas fa-gamepad"></i>
-                        <span>SBPack</span>
-                    </div>
-                    <p>Najlepsze mody FiveM od revsafeDEV</p>
-                </div>
-                <div class="footer-right">
-                    <p>&copy; 2025 SBPack by revsafeDEV. Wszystkie prawa zastrzeżone.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <!-- Admin Access Button -->
     <div class="admin-access-btn" onclick="showLoginModal()">
@@ -263,125 +447,105 @@
 
     <script src="../assets/js/script.js"></script>
     <script>
-        // Custom styles for support page
-        const supportStyles = `
-            .support-header {
-                text-align: center;
-                margin-bottom: 4rem;
-            }
+        // FAQ Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.modern-faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+                const icon = question.querySelector('i');
+                
+                question.addEventListener('click', () => {
+                    const isOpen = item.classList.contains('open');
+                    
+                    // Close all other items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('open');
+                            const otherIcon = otherItem.querySelector('.faq-question i');
+                            otherIcon.style.transform = 'rotate(0deg)';
+                        }
+                    });
+                    
+                    // Toggle current item
+                    if (isOpen) {
+                        item.classList.remove('open');
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        item.classList.add('open');
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
 
-            .support-header h1 {
-                font-size: 3rem;
-                background: var(--gradient);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-                margin-bottom: 1rem;
-            }
+            // Copy code functionality
+            const copyBtns = document.querySelectorAll('.copy-btn');
+            copyBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const codeBlock = btn.parentElement.nextElementSibling;
+                    navigator.clipboard.writeText(codeBlock.textContent);
+                    btn.textContent = '✅';
+                    setTimeout(() => {
+                        btn.textContent = '📋';
+                    }, 2000);
+                });
+            });
 
-            .support-header p {
-                font-size: 1.2rem;
-                color: var(--text-light);
-                max-width: 600px;
-                margin: 0 auto;
-            }
+            // File upload functionality
+            const fileUpload = document.getElementById('supportFiles');
+            const uploadArea = document.querySelector('.file-upload-area');
+            
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                fileUpload.files = e.dataTransfer.files;
+            });
 
-            .support-content {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 4rem;
-                margin-bottom: 4rem;
-            }
+            // Form submission
+            const supportForm = document.getElementById('supportForm');
+            supportForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // Show success notification
+                showNotification('Zapytanie zostało wysłane! Odpowiemy w ciągu 24 godzin.', 'success');
+                
+                // Reset form
+                supportForm.reset();
+            });
+        });
 
-            .faq-section h2,
-            .support-form-section h2 {
-                color: var(--text-primary);
-                font-size: 2rem;
-                margin-bottom: 2rem;
-            }
-
-            .support-form-section p {
-                color: var(--text-light);
-                margin-bottom: 2rem;
-            }
-
-            .form-row {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 1rem;
-            }
-
-            .support-links {
-                text-align: center;
-            }
-
-            .support-links h2 {
-                color: var(--text-primary);
-                font-size: 2rem;
-                margin-bottom: 2rem;
-            }
-
-            .support-link {
-                background: var(--card-bg);
-                padding: 2rem;
-                border-radius: var(--border-radius-lg);
-                text-decoration: none;
-                color: var(--text-light);
-                transition: var(--transition);
-                border: 1px solid var(--border-color);
-                text-align: center;
-            }
-
-            .support-link:hover {
-                transform: translateY(-5px);
-                box-shadow: var(--shadow);
-                color: var(--text-primary);
-            }
-
-            .support-link i {
-                font-size: 2.5rem;
-                color: var(--primary-color);
-                margin-bottom: 1rem;
-                display: block;
-            }
-
-            .support-link h3 {
-                color: var(--text-primary);
-                margin-bottom: 0.5rem;
-            }
-
-            code {
-                background: var(--darker-bg);
-                padding: 0.2rem 0.4rem;
-                border-radius: 4px;
-                color: var(--primary-color);
-                font-family: 'Courier New', monospace;
-            }
-
-            @media (max-width: 768px) {
-                .support-header h1 {
-                    font-size: 2rem;
-                }
-
-                .support-content {
-                    grid-template-columns: 1fr;
-                    gap: 2rem;
-                }
-
-                .form-row {
-                    grid-template-columns: 1fr;
-                }
-
-                .links-grid {
-                    grid-template-columns: 1fr;
-                }
-            }
-        `;
-
-        // Add custom styles to page
-        const styleSheet = document.createElement('style');
-        styleSheet.textContent = supportStyles;
-        document.head.appendChild(styleSheet);
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 1rem 2rem;
+                background: var(--success);
+                color: white;
+                border-radius: var(--radius-lg);
+                z-index: 10000;
+                animation: slideIn 0.3s ease-out;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
     </script>
 </body>
 </html>
