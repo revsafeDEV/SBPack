@@ -537,7 +537,19 @@ class ModsManager {
                     status: 'available',
                     image: 'https://via.placeholder.com/400x250/1a1a2e/ffffff?text=Skrypt_ESX',
                     downloadLink: '#',
-                    downloads: 1200
+                    downloads: 1200,
+                    flags: {
+                        official: true,
+                        sbpack: true,
+                        verified: true,
+                        featured: true
+                    },
+                    author: {
+                        id: 'sbpack_official',
+                        username: 'SBPack',
+                        displayName: 'SBPack Official',
+                        avatar: 'https://via.placeholder.com/100x100?text=SB'
+                    }
                 },
                 {
                     id: '2',
@@ -548,7 +560,19 @@ class ModsManager {
                     status: 'available',
                     image: 'https://via.placeholder.com/400x250/16213e/ffffff?text=Pojazd_Pack',
                     downloadLink: '#',
-                    downloads: 856
+                    downloads: 856,
+                    flags: {
+                        official: true,
+                        sbpack: true,
+                        verified: true,
+                        featured: true
+                    },
+                    author: {
+                        id: 'sbpack_official',
+                        username: 'SBPack',
+                        displayName: 'SBPack Official',
+                        avatar: 'https://via.placeholder.com/100x100?text=SB'
+                    }
                 },
                 {
                     id: '3',
@@ -559,7 +583,19 @@ class ModsManager {
                     status: 'in-development',
                     image: 'https://via.placeholder.com/400x250/0f3460/ffffff?text=Mapa_MLO',
                     downloadLink: '#',
-                    downloads: 643
+                    downloads: 643,
+                    flags: {
+                        official: true,
+                        sbpack: true,
+                        verified: true,
+                        featured: false
+                    },
+                    author: {
+                        id: 'sbpack_official',
+                        username: 'SBPack',
+                        displayName: 'SBPack Official',
+                        avatar: 'https://via.placeholder.com/100x100?text=SB'
+                    }
                 },
                 {
                     id: '4',
@@ -570,7 +606,19 @@ class ModsManager {
                     status: 'available',
                     image: 'https://via.placeholder.com/400x250/28a745/ffffff?text=Free_Script',
                     downloadLink: 'https://github.com/revsafeDEV/car-spawner',
-                    downloads: 2340
+                    downloads: 2340,
+                    flags: {
+                        official: true,
+                        sbpack: true,
+                        verified: true,
+                        featured: false
+                    },
+                    author: {
+                        id: 'sbpack_official',
+                        username: 'SBPack',
+                        displayName: 'SBPack Official',
+                        avatar: 'https://via.placeholder.com/100x100?text=SB'
+                    }
                 }
             ];
             this.saveMods();
@@ -653,11 +701,32 @@ class ModsManager {
 
     createModCard(mod) {
         const card = document.createElement('div');
-        card.className = `mod-card ${mod.price > 0 ? 'premium' : ''}`;
+        const isOfficial = mod.flags && mod.flags.sbpack;
+        const isCommunity = mod.flags && mod.flags.community;
+        const cardClasses = [
+            'mod-card',
+            mod.price > 0 ? 'premium' : '',
+            isOfficial ? 'official-mod' : '',
+            isCommunity ? 'community-mod' : ''
+        ].filter(Boolean).join(' ');
+        
+        card.className = cardClasses;
         card.innerHTML = `
             <div class="mod-status status-${mod.status.replace('-', '')}">
                 ${this.getStatusText(mod.status)}
             </div>
+            ${isOfficial ? `
+                <div class="official-badge">
+                    <i class="fas fa-certificate"></i>
+                    <span>SBPack Official</span>
+                </div>
+            ` : ''}
+            ${isCommunity ? `
+                <div class="community-badge">
+                    <i class="fas fa-users"></i>
+                    <span>Community</span>
+                </div>
+            ` : ''}
             <div class="mod-image">
                 <img src="${mod.image}" alt="${mod.name}">
                 <div class="mod-overlay">
@@ -673,6 +742,13 @@ class ModsManager {
             <div class="mod-content">
                 <h3>${mod.name}</h3>
                 <p>${mod.description}</p>
+                ${mod.author ? `
+                    <div class="mod-author">
+                        <img src="${mod.author.avatar}" alt="${mod.author.username}" class="author-avatar">
+                        <span class="author-name">${mod.author.displayName || mod.author.username}</span>
+                        ${mod.flags && mod.flags.verified ? '<i class="fas fa-check-circle verified-badge" title="Zweryfikowany twórca"></i>' : ''}
+                    </div>
+                ` : ''}
                 ${this.renderPricingSection(mod)}
                 <div class="mod-meta">
                     <div class="mod-category">
@@ -908,6 +984,22 @@ function showAdminSection(section) {
         // Render mods for admin
         modsManager.renderAdminMods();
         
+    } else if (section === 'moderation') {
+        // Show moderation section
+        const moderationSection = document.getElementById('moderationSection');
+        if (moderationSection) {
+            moderationSection.style.display = 'block';
+            console.log('Moderation section shown');
+        }
+        const btn = document.querySelector('.admin-nav-btn[onclick="showAdminSection(\'moderation\')"]');
+        if (btn) btn.classList.add('active');
+        
+        // Load pending mods for moderation
+        if (typeof userModsManager !== 'undefined') {
+            userModsManager.renderPendingMods('pendingModsList');
+            updateModerationStats();
+        }
+        
     } else if (section === 'admins') {
         // Show admin management section
         const mgmt = document.getElementById('adminManagement');
@@ -937,6 +1029,34 @@ function showAdminSection(section) {
 }
 
 window.showAdminSection = showAdminSection;
+
+// Aktualizacja statystyk moderacji
+function updateModerationStats() {
+    if (typeof userModsManager === 'undefined') return;
+    
+    const pendingMods = userModsManager.getPendingMods();
+    const approvedMods = userModsManager.getCommunityMods();
+    
+    // Aktualizacja liczników
+    const totalPending = document.getElementById('totalPendingMods');
+    const totalApproved = document.getElementById('totalApprovedMods');
+    const pendingCount = document.getElementById('pendingModsCount');
+    
+    if (totalPending) totalPending.textContent = pendingMods.length;
+    if (totalApproved) totalApproved.textContent = approvedMods.length;
+    
+    // Pokaż/ukryj licznik oczekujących modów w nawigacji
+    if (pendingCount) {
+        if (pendingMods.length > 0) {
+            pendingCount.textContent = pendingMods.length;
+            pendingCount.style.display = 'flex';
+        } else {
+            pendingCount.style.display = 'none';
+        }
+    }
+}
+
+window.updateModerationStats = updateModerationStats;
 
 // Admin Management Functions
 function showAdminManagement() {

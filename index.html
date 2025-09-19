@@ -7,9 +7,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
-    <title>SBPack - Nowoczesne Mody FiveM | revsafeDEV</title>
-    <meta name="description" content="Najnowocześniejsza platforma modów FiveM. Odkryj premium skrypty, pojazdy, mapy i zasoby dla serwera FiveM. Professional gaming experience.">
-    <meta name="keywords" content="FiveM, mody, skrypty, pojazdy, mapy, GTA V, roleplay, serwer, premium, gaming">
+    <title>SBMods - Otwarta Platforma Modów FiveM</title>
+    <meta name="description" content="SBMods - otwarta platforma dla społeczności FiveM. Przeglądaj, dodawaj i dziel się najlepszymi modami, skryptami i dodatkami. Dołącz do społeczności twórców!">
+    <meta name="keywords" content="SBMods, FiveM, mody, skrypty, pojazdy, mapy, GTA V, roleplay, serwer, społeczność, platforma, open source">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -25,8 +25,8 @@
                     <i class="fas fa-code"></i>
                 </div>
                 <div class="logo-text">
-                    <span class="brand-name">SBPack</span>
-                    <span class="brand-subtitle">by revsafeDEV</span>
+                    <span class="brand-name">SBMods</span>
+                    <span class="brand-subtitle">Community Platform</span>
                 </div>
             </div>
             
@@ -63,6 +63,56 @@
             </nav>
             
             <div class="header-actions">
+                <!-- Cart Button -->
+                <button class="cart-btn" onclick="cart.toggleCart()" style="position: relative;">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                
+                <!-- Auth Buttons (for non-logged users) -->
+                <div class="auth-buttons">
+                    <button class="login-btn auth-action-btn" onclick="showLoginModal()">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Logowanie</span>
+                    </button>
+                    <button class="register-btn auth-action-btn" onclick="showRegisterModal()">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Rejestracja</span>
+                    </button>
+                </div>
+                
+                <!-- User Navigation (for logged users) -->
+                <div class="user-navigation" style="display: none;">
+                    <button class="user-mods-btn" onclick="showUserDashboard()">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Dodaj Mod</span>
+                    </button>
+                    
+                    <div class="user-dropdown">
+                        <button class="user-avatar">
+                            <img src="https://via.placeholder.com/40x40?text=U" alt="User Avatar">
+                            <span class="user-name">Użytkownik</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        
+                        <div class="user-dropdown-menu">
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-user"></i> Mój profil
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-cog"></i> Ustawienia
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-gamepad"></i> Moje mody
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item logout-btn" onclick="userLogout()">
+                                <i class="fas fa-sign-out-alt"></i> Wyloguj
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
                 <button class="search-btn">
                     <i class="fas fa-search"></i>
                 </button>
@@ -140,6 +190,65 @@
             </div>
         </div>
         
+        <!-- Moderation Section -->
+        <div class="admin-section moderation-section" id="moderationSection" style="display: none;">
+            <div class="section-header">
+                <h3><i class="fas fa-shield-alt"></i> Moderacja Modów Społeczności</h3>
+                <p>Przeglądaj i zatwierdź mody przesłane przez użytkowników</p>
+            </div>
+            
+            <div class="moderation-stats">
+                <div class="stat-card">
+                    <div class="stat-icon pending">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="totalPendingMods">0</span>
+                        <span class="stat-label">Oczekujące</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon approved">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="totalApprovedMods">0</span>
+                        <span class="stat-label">Zatwierdzone</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon rejected">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="totalRejectedMods">0</span>
+                        <span class="stat-label">Odrzucone</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="moderation-filters">
+                <button class="filter-btn active" data-filter="pending">
+                    <i class="fas fa-clock"></i> Oczekujące
+                </button>
+                <button class="filter-btn" data-filter="all">
+                    <i class="fas fa-list"></i> Wszystkie
+                </button>
+                <button class="filter-btn" data-filter="approved">
+                    <i class="fas fa-check"></i> Zatwierdzone
+                </button>
+                <button class="filter-btn" data-filter="rejected">
+                    <i class="fas fa-times"></i> Odrzucone
+                </button>
+            </div>
+            
+            <div id="pendingModsList" class="pending-mods-container">
+                <!-- Pending mods will be rendered here -->
+            </div>
+        </div>
+
         <!-- Admin Management Section -->
         <div class="admin-management" id="adminManagement" style="display: none;">
             <div class="admin-content">
@@ -225,7 +334,11 @@
         <!-- Admin Navigation -->
         <div class="admin-nav">
             <button class="admin-nav-btn active" onclick="showAdminSection('mods')">
-                <i class="fas fa-gamepad"></i> Mody
+                <i class="fas fa-gamepad"></i> Mody SBPack
+            </button>
+            <button class="admin-nav-btn" onclick="showAdminSection('moderation')">
+                <i class="fas fa-shield-alt"></i> Moderacja
+                <span class="pending-count" id="pendingModsCount" style="display: none;">0</span>
             </button>
             <button class="admin-nav-btn" onclick="showAdminSection('admins')">
                 <i class="fas fa-users-cog"></i> Administratorzy
@@ -237,7 +350,7 @@
         </div>
     </div>
 
-    <!-- Login Modal -->
+    <!-- Admin Login Modal -->
     <div id="loginModal" class="login-modal" style="display: none;">
         <div class="login-content">
             <h2><i class="fas fa-lock"></i> Logowanie Administratora</h2>
@@ -253,6 +366,219 @@
                     Anuluj
                 </button>
             </form>
+        </div>
+    </div>
+
+    <!-- User Registration Modal -->
+    <div id="registerModal" class="auth-modal" style="display: none;">
+        <div class="auth-modal-content">
+            <div class="auth-header">
+                <h2><i class="fas fa-user-plus"></i> Dołącz do SBMods</h2>
+                <button class="auth-close" onclick="closeAuthModal('registerModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="auth-body">
+                <p class="auth-subtitle">Utwórz konto i zacznij dzielić się swoimi modami z społecznością!</p>
+                
+                <!-- OAuth Buttons -->
+                <div class="oauth-buttons">
+                    <button class="oauth-btn google" data-provider="google">
+                        <i class="fab fa-google"></i>
+                        Kontynuuj z Google
+                    </button>
+                    <button class="oauth-btn github" data-provider="github">
+                        <i class="fab fa-github"></i>
+                        Kontynuuj z GitHub
+                    </button>
+                    <button class="oauth-btn discord" data-provider="discord">
+                        <i class="fab fa-discord"></i>
+                        Kontynuuj z Discord
+                    </button>
+                </div>
+                
+                <div class="auth-divider">
+                    <span>lub</span>
+                </div>
+                
+                <!-- Registration Form -->
+                <form id="registerForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="username">Nazwa użytkownika</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Adres email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Hasło</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword">Potwierdź hasło</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    </div>
+                    
+                    <button type="submit" class="auth-btn primary">
+                        <i class="fas fa-user-plus"></i>
+                        Utwórz konto
+                    </button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>Masz już konto? <a href="#" onclick="closeAuthModal('registerModal'); showLoginModal();">Zaloguj się</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Login Modal -->
+    <div id="loginUserModal" class="auth-modal" style="display: none;">
+        <div class="auth-modal-content">
+            <div class="auth-header">
+                <h2><i class="fas fa-sign-in-alt"></i> Witaj ponownie!</h2>
+                <button class="auth-close" onclick="closeAuthModal('loginUserModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="auth-body">
+                <p class="auth-subtitle">Zaloguj się do swojego konta SBMods</p>
+                
+                <!-- OAuth Buttons -->
+                <div class="oauth-buttons">
+                    <button class="oauth-btn google" data-provider="google">
+                        <i class="fab fa-google"></i>
+                        Kontynuuj z Google
+                    </button>
+                    <button class="oauth-btn github" data-provider="github">
+                        <i class="fab fa-github"></i>
+                        Kontynuuj z GitHub
+                    </button>
+                    <button class="oauth-btn discord" data-provider="discord">
+                        <i class="fab fa-discord"></i>
+                        Kontynuuj z Discord
+                    </button>
+                </div>
+                
+                <div class="auth-divider">
+                    <span>lub</span>
+                </div>
+                
+                <!-- Login Form -->
+                <form id="userLoginForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="loginEmail">Adres email</label>
+                        <input type="email" id="loginEmail" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loginPassword">Hasło</label>
+                        <input type="password" id="loginPassword" name="password" required>
+                    </div>
+                    
+                    <button type="submit" class="auth-btn primary">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Zaloguj się
+                    </button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>Nie masz jeszcze konta? <a href="#" onclick="closeAuthModal('loginUserModal'); showRegisterModal();">Zarejestruj się</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add User Mod Modal -->
+    <div id="addModModal" class="auth-modal" style="display: none;">
+        <div class="auth-modal-content add-mod-modal">
+            <div class="auth-header">
+                <h2><i class="fas fa-plus-circle"></i> Dodaj Nowy Mod</h2>
+                <button class="auth-close" onclick="userModsManager.closeAddModModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="auth-body">
+                <p class="auth-subtitle">Podziel się swoim modem ze społecznością SBMods!</p>
+                
+                <form id="addUserModForm" class="add-mod-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="modName">Nazwa moda *</label>
+                            <input type="text" id="modName" name="modName" required placeholder="np. Advanced Car System">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="modVersion">Wersja</label>
+                            <input type="text" id="modVersion" name="modVersion" placeholder="1.0.0">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="modDescription">Opis moda *</label>
+                        <textarea id="modDescription" name="modDescription" required rows="4" placeholder="Opisz swój mod - co robi, jakie ma funkcje, jak się instaluje..."></textarea>
+                        <small class="form-hint">Co najmniej 20 znaków</small>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="modCategory">Kategoria *</label>
+                            <select id="modCategory" name="modCategory" required>
+                                <option value="">Wybierz kategorię</option>
+                                <option value="skrypty">Skrypty</option>
+                                <option value="pojazdy">Pojazdy</option>
+                                <option value="mapy">Mapy</option>
+                                <option value="skins">Skiny</option>
+                                <option value="inne">Inne</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="modPrice">Cena (PLN)</label>
+                            <input type="number" id="modPrice" name="modPrice" min="0" step="0.01" placeholder="0.00">
+                            <small class="form-hint">0 = darmowy mod</small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="modImage">URL obrazka</label>
+                        <input type="url" id="modImage" name="modImage" placeholder="https://example.com/image.jpg">
+                        <small class="form-hint">Link do zdjęcia reprezentującego mód</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="modDownloadLink">Link do pobrania *</label>
+                        <input type="url" id="modDownloadLink" name="modDownloadLink" required placeholder="https://github.com/user/repo/releases">
+                        <small class="form-hint">Link bezpośredni do pobrania lub repozytorium</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="modTags">Tagi</label>
+                        <input type="text" id="modTags" name="modTags" placeholder="esx, qbus, standalone">
+                        <small class="form-hint">Oddziel przecinkami (opcjonalne)</small>
+                    </div>
+                    
+                    <div class="form-notice">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Uwaga:</strong> Wszystkie mody są moderowane przed publikacją. 
+                            Sprawdź czy Twój mod spełnia nasze standardy jakości i bezpieczeństwa.
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="auth-btn primary add-mod-btn">
+                        <i class="fas fa-upload"></i>
+                        Wyślij do moderacji
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -277,20 +603,20 @@
         <div class="hero-container">
             <div class="hero-content-modern">
                 <div class="hero-badge">
-                    <span class="badge-icon">🚀</span>
-                    <span class="badge-text">Professional Gaming Experience</span>
+                    <span class="badge-icon">🌐</span>
+                    <span class="badge-text">Open Community Platform</span>
                 </div>
                 
                 <div class="hero-main-content">
                     <h1 class="hero-title">
-                        <span class="title-main">Nowoczesne</span>
-                        <span class="title-highlight">Mody FiveM</span>
-                        <span class="title-sub">Premium Quality</span>
+                        <span class="title-main">Twórz i Dziel Się</span>
+                        <span class="title-highlight">Modami FiveM</span>
+                        <span class="title-sub">Community Driven</span>
                     </h1>
                     
                     <p class="hero-description">
-                        Odkryj najnowocześniejsze rozwiązania dla Twojego serwera FiveM. 
-                        Premium skrypty, zasoby i narzędzia programistyczne w jednym miejscu.
+                        Dołącz do społeczności twórców FiveM! Publikuj swoje mody, odkrywaj prace innych 
+                        i buduj razem najlepszą platformę modów. Każdy może zostać twórcą!
                     </p>
                     
                     <div class="hero-stats">
@@ -311,15 +637,15 @@
                 
                 <div class="hero-actions">
                     <a href="pages/mods.html" class="modern-btn primary-btn">
-                        <span class="btn-icon">⚡</span>
-                        <span class="btn-text">Eksploruj Mody</span>
+                        <span class="btn-icon">🔍</span>
+                        <span class="btn-text">Przeglądaj Mody</span>
                         <span class="btn-arrow">→</span>
                     </a>
                     
-                    <a href="pages/support.html" class="modern-btn secondary-btn">
-                        <span class="btn-icon">💬</span>
-                        <span class="btn-text">Uzyskaj Wsparcie</span>
-                    </a>
+                    <button onclick="showRegisterModal()" class="modern-btn secondary-btn">
+                        <span class="btn-icon">➕</span>
+                        <span class="btn-text">Dodaj Swoje Mody</span>
+                    </button>
                 </div>
             </div>
             
@@ -585,5 +911,7 @@
     <script src="assets/js/modules/statistics.js"></script>
     <script src="assets/js/modules/cart.js"></script>
     <script src="assets/js/modules/purchases.js"></script>
+    <script src="assets/js/modules/auth.js"></script>
+    <script src="assets/js/modules/user-mods.js"></script>
 </body>
 </html>
