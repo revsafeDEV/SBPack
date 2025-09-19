@@ -693,15 +693,37 @@ class ModsManager {
         switch(mod.status) {
             case 'available':
                 if (mod.price > 0) {
-                    return `<a href="${this.generatePayPalLink(mod)}" class="paypal-button" target="_blank">
-                        <i class="fab fa-paypal"></i>
-                        Zapłać PayPal
-                    </a>`;
+                    // Sprawdź czy mod jest już zakupiony
+                    const isPurchased = typeof purchasedMods !== 'undefined' && purchasedMods.isPurchased(mod.id);
+                    const isInCart = typeof cart !== 'undefined' && cart.isInCart(mod.id);
+                    
+                    if (isPurchased) {
+                        return `<button class="btn btn-success" onclick="purchasedMods.downloadMod('${mod.id}')">
+                            <i class="fas fa-download"></i>
+                            Pobierz
+                        </button>`;
+                    } else if (isInCart) {
+                        return `<button class="btn btn-secondary" onclick="cart.toggleCart()">
+                            <i class="fas fa-shopping-cart"></i>
+                            W koszyku
+                        </button>`;
+                    } else {
+                        return `<div class="mod-purchase-options">
+                            <button class="btn btn-primary" onclick="cart.addToCart(${JSON.stringify(mod).replace(/"/g, '&quot;')})">
+                                <i class="fas fa-cart-plus"></i>
+                                Dodaj do koszyka
+                            </button>
+                            <a href="${this.generatePayPalLink(mod)}" class="paypal-button" target="_blank">
+                                <i class="fab fa-paypal"></i>
+                                Kup teraz
+                            </a>
+                        </div>`;
+                    }
                 } else {
-                    return `<a href="${mod.downloadLink}" class="btn btn-download">
+                    return `<button class="btn btn-download" onclick="modsManager.downloadFreeMod('${mod.id}')">
                         <i class="fas fa-download"></i>
                         Pobierz za darmo
-                    </a>`;
+                    </button>`;
                 }
             case 'in-development':
                 return `<button class="btn btn-secondary" disabled>
@@ -714,6 +736,27 @@ class ModsManager {
                     Niedostępny
                 </button>`;
         }
+    }
+    
+    // Pobieranie darmowego moda
+    downloadFreeMod(modId) {
+        const mod = this.getMod(modId);
+        if (!mod) return;
+        
+        // Aktualizacja statystyk
+        if (typeof statisticsManager !== 'undefined') {
+            statisticsManager.incrementDownloads(modId);
+        }
+        
+        mod.downloads = (mod.downloads || 0) + 1;
+        this.saveMods();
+        
+        showNotification(`Pobieranie ${mod.name} rozpoczęte!`, 'success');
+        
+        // Symulacja pobierania
+        setTimeout(() => {
+            showNotification('Darmowy mod został pobrany!', 'success');
+        }, 2000);
     }
     
     generatePayPalLink(mod) {

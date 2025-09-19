@@ -1,0 +1,46 @@
+{
+  "mod_stats": {
+    "1": {
+      "downloads": 1547,
+      "purchases": 89,
+      "revenue": 2668.11,
+      "rating": 4.8,
+      "reviews": 45,
+      "lastDownload": "2025-01-19T14:30:22Z"
+    },
+    "2": {
+      "downloads": 1203,
+      "purchases": 67,
+      "revenue": 3346.33,
+      "rating": 4.9,
+      "reviews": 34,
+      "lastDownload": "2025-01-19T13:45:15Z"
+    },
+    "3": {
+      "downloads": 892,
+      "purchases": 43,
+      "revenue": 3439.57,
+      "rating": 4.7,
+      "reviews": 28,
+      "lastDownload": "2025-01-19T12:20:08Z"
+    },
+    "4": {
+      "downloads": 3245,
+      "purchases": 0,
+      "revenue": 0,
+      "rating": 4.9,
+      "reviews": 156,
+      "lastDownload": "2025-01-19T14:51:30Z"
+    }
+  },
+  "total_stats": {
+    "total_downloads": 6887,
+    "total_purchases": 199,
+    "total_revenue": 9454.01,
+    "average_rating": 4.8,
+    "total_reviews": 263,
+    "active_mods": 4,
+    "premium_mods": 3,
+    "free_mods": 1
+  }
+}
