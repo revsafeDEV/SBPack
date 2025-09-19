@@ -483,8 +483,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Admin Configuration
 const ADMIN_PASSWORD = 'SBPack2025!'; // Zmień to hasło!
-const ADMIN_PASSWORD_ALT = 'admin'; // Alternatywne hasło dla testów
-console.log('Admin password loaded:', ADMIN_PASSWORD);
 let isAdminLoggedIn = false;
 
 // Mods Storage
@@ -820,6 +818,7 @@ window.closeAdminPanel = closeAdminPanel;
 
 function showAdminSection(section) {
     console.log('showAdminSection called with:', section);
+    
     // Hide all sections
     document.querySelectorAll('.admin-content, .admin-management').forEach(el => {
         el.style.display = 'none';
@@ -832,24 +831,197 @@ function showAdminSection(section) {
     
     // Show selected section
     if (section === 'mods') {
-        const content = document.querySelector('.admin-content');
-        if (content) content.style.display = 'grid';
+        // Show main admin content (mods management)
+        const content = document.querySelector('.admin-panel > .admin-content');
+        if (content) {
+            content.style.display = 'grid';
+            console.log('Mods section shown');
+        }
         const btn = document.querySelector('.admin-nav-btn[onclick="showAdminSection(\'mods\')"]');
         if (btn) btn.classList.add('active');
+        
+        // Render mods for admin
+        modsManager.renderAdminMods();
+        
     } else if (section === 'admins') {
+        // Show admin management section
         const mgmt = document.getElementById('adminManagement');
-        if (mgmt) mgmt.style.display = 'block';
+        if (mgmt) {
+            mgmt.style.display = 'block';
+            console.log('Admins section shown');
+        }
         const btn = document.querySelector('.admin-nav-btn[onclick="showAdminSection(\'admins\')"]');
         if (btn) btn.classList.add('active');
+        
+        // Show only admin management form and list
+        showAdminManagement();
+        
     } else if (section === 'support') {
+        // Show support section 
         const mgmt = document.getElementById('adminManagement');
-        if (mgmt) mgmt.style.display = 'block';
+        if (mgmt) {
+            mgmt.style.display = 'block';
+            console.log('Support section shown');
+        }
         const btn = document.querySelector('.admin-nav-btn[onclick="showAdminSection(\'support\')"]');
         if (btn) btn.classList.add('active');
+        
+        // Show only support tickets
+        showSupportManagement();
     }
 }
 
 window.showAdminSection = showAdminSection;
+
+// Admin Management Functions
+function showAdminManagement() {
+    console.log('showAdminManagement called');
+    
+    // Hide support sections, show only admin sections
+    const adminSections = document.querySelectorAll('#adminManagement .admin-section');
+    adminSections.forEach((section, index) => {
+        if (index < 2) { // Show first two sections (Add Admin + Admin List)
+            section.style.display = 'block';
+        } else { // Hide support sections
+            section.style.display = 'none';
+        }
+    });
+    
+    // Load and display admin list
+    loadAdminsList();
+}
+
+function showSupportManagement() {
+    console.log('showSupportManagement called');
+    
+    // Hide admin sections, show only support sections
+    const adminSections = document.querySelectorAll('#adminManagement .admin-section');
+    adminSections.forEach((section, index) => {
+        if (index >= 2) { // Show support sections (index 2 and above)
+            section.style.display = 'block';
+        } else { // Hide admin sections
+            section.style.display = 'none';
+        }
+    });
+    
+    // Load and display support tickets
+    loadSupportTickets();
+}
+
+function loadAdminsList() {
+    const adminsList = document.getElementById('adminsList');
+    if (!adminsList) return;
+    
+    // Simulate admin data
+    const admins = [
+        {
+            id: 1,
+            username: 'revsafeDEV',
+            email: 'revsafe777@gmail.com',
+            role: 'Super Administrator',
+            lastLogin: new Date().toLocaleDateString('pl-PL')
+        }
+    ];
+    
+    adminsList.innerHTML = admins.map(admin => `
+        <div class="admin-item">
+            <div class="admin-info">
+                <h4>${admin.username}</h4>
+                <p>${admin.email}</p>
+                <small>${admin.role} • Ostatnie logowanie: ${admin.lastLogin}</small>
+            </div>
+            <div class="admin-actions">
+                <button class="btn btn-small btn-edit" onclick="editAdmin(${admin.id})">
+                    <i class="fas fa-edit"></i>
+                </button>
+                ${admin.id !== 1 ? `<button class="btn btn-small btn-delete" onclick="deleteAdmin(${admin.id})">
+                    <i class="fas fa-trash"></i>
+                </button>` : ''}
+            </div>
+        </div>
+    `).join('');
+}
+
+function loadSupportTickets() {
+    const ticketsList = document.getElementById('supportTicketsList');
+    if (!ticketsList) return;
+    
+    // Simulate support tickets data
+    const tickets = [
+        {
+            id: 1,
+            subject: 'Problem z instalacją moda ESX Jobs',
+            priority: 'high',
+            status: 'new',
+            author: 'user@example.com',
+            date: new Date().toLocaleDateString('pl-PL')
+        },
+        {
+            id: 2,
+            subject: 'Błąd w skrypcie Car Spawner',
+            priority: 'medium',
+            status: 'in_progress',
+            author: 'developer@example.com',
+            date: new Date().toLocaleDateString('pl-PL')
+        }
+    ];
+    
+    ticketsList.innerHTML = tickets.map(ticket => `
+        <div class="ticket-item ${ticket.status}">
+            <div class="ticket-header">
+                <h4>${ticket.subject}</h4>
+                <span class="ticket-priority priority-${ticket.priority}">${ticket.priority}</span>
+            </div>
+            <div class="ticket-meta">
+                <span>Od: ${ticket.author}</span>
+                <span>Data: ${ticket.date}</span>
+                <span class="ticket-status status-${ticket.status}">${getStatusText(ticket.status)}</span>
+            </div>
+            <div class="ticket-actions">
+                <button class="btn btn-small btn-primary" onclick="viewTicket(${ticket.id})">
+                    <i class="fas fa-eye"></i> Zobacz
+                </button>
+                <button class="btn btn-small btn-success" onclick="resolveTicket(${ticket.id})">
+                    <i class="fas fa-check"></i> Rozwiąż
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function getStatusText(status) {
+    const statusMap = {
+        'new': 'Nowe',
+        'in_progress': 'W trakcie',
+        'resolved': 'Rozwiązane'
+    };
+    return statusMap[status] || status;
+}
+
+// Placeholder functions for admin actions
+function editAdmin(id) {
+    showNotification(`Edytowanie administratora ID: ${id}`, 'info');
+}
+
+function deleteAdmin(id) {
+    if (confirm('Czy na pewno chcesz usunąć tego administratora?')) {
+        showNotification('Administrator został usunięty', 'success');
+    }
+}
+
+function viewTicket(id) {
+    showNotification(`Wyświetlanie zgłoszenia ID: ${id}`, 'info');
+}
+
+function resolveTicket(id) {
+    if (confirm('Czy na pewno chcesz oznaczyć to zgłoszenie jako rozwiązane?')) {
+        showNotification('Zgłoszenie zostało rozwiązane', 'success');
+        loadSupportTickets(); // Refresh the list
+    }
+}
+
+window.showAdminManagement = showAdminManagement;
+window.showSupportManagement = showSupportManagement;
 
 function handlePurchase(modId) {
     const mod = modsManager.getMod(modId);
@@ -905,7 +1077,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Checking password:', password, 'against:', ADMIN_PASSWORD);
             console.log('Password length:', password.length, 'Expected length:', ADMIN_PASSWORD.length);
             
-            if (password === ADMIN_PASSWORD || password === ADMIN_PASSWORD_ALT || password === 'admin123') {
+            if (password === ADMIN_PASSWORD) {
                 console.log('Password correct!');
                 isAdminLoggedIn = true;
                 closeLoginModal();
@@ -915,7 +1087,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('Password incorrect!');
                 console.log('Tried:', JSON.stringify(password));
                 console.log('Expected:', JSON.stringify(ADMIN_PASSWORD));
-                showNotification('Nieprawidłowe hasło! Spróbuj: admin', 'error');
+                showNotification('Nieprawidłowe hasło!', 'error');
                 document.getElementById('adminPassword').value = '';
             }
         });
