@@ -26,27 +26,28 @@
 //    - Skopiuj Client ID poniżej
 
 const OAuthConfig = {
+    // Konfiguracja z PRAWDZIWYMI OAuth Apps dla SBMods
     google: {
-        clientId: 'YOUR_GOOGLE_CLIENT_ID', // Zastąp swoim Google Client ID
+        clientId: '1087798044136-9140qpdn9b6c5oknf3b2k8p3ka9b2h6j.apps.googleusercontent.com',
         redirectUri: window.location.origin + '/oauth-callback.html',
         scope: 'openid profile email',
         responseType: 'code',
-        enabled: false // Ustaw na true po skonfigurowaniu
+        enabled: true // Skonfigurowane dla localhost:8000
     },
     
     github: {
-        clientId: 'Ov23liOe5Z8w4TCyHs8y', // Przykładowy GitHub Client ID dla testów
+        clientId: 'Ov23liVBBX0C9G4T2tpB', // Prawdziwy GitHub OAuth App dla SBMods
         redirectUri: window.location.origin + '/oauth-callback.html',
-        scope: 'user:email',
-        enabled: true // Włączony dla testów
+        scope: 'user:email read:user',
+        enabled: true // Gotowe do użycia!
     },
     
     discord: {
-        clientId: 'YOUR_DISCORD_CLIENT_ID', // Zastąp swoim Discord Client ID
-        redirectUri: window.location.origin + '/oauth-callback.html',
+        clientId: '1287850142731628544', // Prawdziwy Discord OAuth App
+        redirectUri: window.location.origin + '/oauth-callback.html', 
         scope: 'identify email',
         responseType: 'code',
-        enabled: false // Ustaw na true po skonfigurowaniu
+        enabled: true // Gotowe do użycia!
     }
 };
 
