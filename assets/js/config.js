@@ -28,22 +28,22 @@
 const OAuthConfig = {
     google: {
         clientId: 'YOUR_GOOGLE_CLIENT_ID', // Zastąp swoim Google Client ID
-        redirectUri: window.location.origin + '/oauth/callback/google',
+        redirectUri: window.location.origin + '/oauth-callback.html',
         scope: 'openid profile email',
         responseType: 'code',
         enabled: false // Ustaw na true po skonfigurowaniu
     },
     
     github: {
-        clientId: 'YOUR_GITHUB_CLIENT_ID', // Zastąp swoim GitHub Client ID  
-        redirectUri: window.location.origin + '/oauth/callback/github',
+        clientId: 'Ov23liOe5Z8w4TCyHs8y', // Przykładowy GitHub Client ID dla testów
+        redirectUri: window.location.origin + '/oauth-callback.html',
         scope: 'user:email',
-        enabled: false // Ustaw na true po skonfigurowaniu
+        enabled: true // Włączony dla testów
     },
     
     discord: {
         clientId: 'YOUR_DISCORD_CLIENT_ID', // Zastąp swoim Discord Client ID
-        redirectUri: window.location.origin + '/oauth/callback/discord', 
+        redirectUri: window.location.origin + '/oauth-callback.html',
         scope: 'identify email',
         responseType: 'code',
         enabled: false // Ustaw na true po skonfigurowaniu
