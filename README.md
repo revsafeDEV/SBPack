@@ -1,6 +1,8 @@
-# 🎮 SBPack - Nowoczesna Platforma Modów FiveM
+# 🎮 SBMods - Otwarta Platforma Modów FiveM
 
-**SBPack** to profesjonalna platforma do dystrybucji modów, skryptów i zasobów dla serwerów FiveM. Stworzona przez **revsafeDEV** z myślą o nowoczesnym designie i najlepszym doświadczeniu użytkownika.
+**SBMods** to nowoczesna, społecznościowa platforma do dystrybucji modów, skryptów i zasobów dla serwerów FiveM. Stworzona przez **revsafeDEV** z myślą o otwartości, bezpieczeństwie i najlepszym doświadczeniu użytkownika.
+
+🚀 **NOWE FUNKCJE**: Integracja OAuth (Google, GitHub, Discord), zaawansowany system powiadomień, ulepszona autoryzacja!
 
 ![SBPack Preview](https://via.placeholder.com/800x400/1a1a2e/ffffff?text=SBPack+FiveM+Mods)
 
@@ -18,10 +20,17 @@
 - Wsparcie dla różnych walut (PLN domyślnie)
 - Natychmiastowy dostęp po opłaceniu
 
+### 🔐 **System Autoryzacji OAuth**
+- Logowanie przez Google, GitHub, Discord
+- Bezpieczna autoryzacja bez haseł
+- Automatyczne tworzenie profili użytkowników
+- Fallback do symulacji dla testów
+
 ### 🛠️ **Panel Administracyjny**
 - Zarządzanie modami (dodawanie, edycja, usuwanie)
 - System uprawnień administratorów
 - Zarządzanie zgłoszeniami support
+- Moderacja modów społeczności
 - Statystyki i analityka
 
 ### 📱 **Responsywny Design**
@@ -48,19 +57,29 @@
 ## 📁 Struktura Projektu
 
 ```
-SBPack/
+SBMods/
 ├── assets/
 │   ├── css/
-│   │   ├── styles.css          # Główne style aplikacji
-│   │   └── styles-new.css      # Dodatkowe style
+│   │   └── styles.css          # Główne style + OAuth modals
 │   └── js/
-│       └── script.js           # Logika aplikacji
+│       ├── config.js            # Konfiguracja OAuth
+│       ├── script.js            # Główna logika
+│       └── modules/            # Moduły JavaScript
+│           ├── auth.js         # System autoryzacji OAuth
+│           ├── notifications.js # System powiadomień
+│           ├── cart.js         # Koszyk
+│           ├── user-mods.js    # Mody użytkowników
+│           └── ...             # Inne moduły
 ├── pages/
 │   ├── contact.html            # Strona kontaktu
 │   ├── mods.html              # Galeria modów
 │   ├── success.html           # Strona sukcesu płatności
 │   └── support-chat.html      # Live support
+├── database/                  # Dane lokalne
+│   ├── mods_stats.json        # Statystyki
+│   └── users.json             # Użytkownicy
 ├── index.html                 # Strona główna
+├── oauth-callback.html        # OAuth callback
 └── README.md                  # Dokumentacja
 ```
 
@@ -79,19 +98,55 @@ SBPack/
 
 ## ⚙️ Instalacja
 
-1. **Klonuj repozytorium**
-   ```bash
-   git clone https://github.com/USERNAME/SBPack.git
-   cd SBPack
-   ```
+### 🚀 Szybki Start
 
-2. **Uruchom lokalnie**
-   - Otwórz `index.html` w przeglądarce
-   - Lub użyj lokalnego serwera (np. Live Server w VS Code)
+```bash
+# Klonuj repozytorium
+git clone https://github.com/revsafeDEV/SBPack.git
+cd SBPack
 
-3. **Konfiguracja PayPal**
-   - Edytuj `assets/js/script.js`
-   - Zmień `paypalEmail` na swój adres PayPal Business
+# Uruchom lokalnie (wybierz jedną opcję):
+# 1. Live Server w VS Code (zalecane)
+# 2. Python: python -m http.server 8000
+# 3. Node.js: npx serve .
+# 4. Dowolny serwer HTTP
+```
+
+### 🔐 Konfiguracja OAuth (opcjonalnie)
+
+**Aplikacja działa od razu bez OAuth** - używa symulacji do testów.
+
+Aby włączyć prawdziwe OAuth:
+
+#### 1. Google OAuth
+```bash
+# 1. Idź na https://console.cloud.google.com/
+# 2. Utwórz projekt i włącz Google+ API
+# 3. Utwórz OAuth 2.0 client ID
+# 4. Dodaj redirect: http://localhost:8000/oauth-callback.html
+```
+
+W `assets/js/config.js`:
+```javascript
+google: {
+    clientId: 'TWÓJ_GOOGLE_CLIENT_ID',
+    enabled: true // Zmień na true
+}
+```
+
+#### 2. GitHub OAuth
+```bash
+# 1. GitHub Settings > Developer settings > OAuth Apps
+# 2. New OAuth App
+# 3. Callback URL: http://localhost:8000/oauth-callback.html
+```
+
+#### 3. Discord OAuth
+```bash
+# 1. https://discord.com/developers/applications
+# 2. New Application > OAuth2
+# 3. Redirect URI: http://localhost:8000/oauth-callback.html
+```
 
 ## 🔧 Konfiguracja
 

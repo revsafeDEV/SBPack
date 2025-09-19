@@ -161,41 +161,184 @@ class AuthManager {
     }
 
     // OAuth logowanie
-    handleOAuthLogin(provider) {
+    async handleOAuthLogin(provider) {
         console.log(`Attempting OAuth login with ${provider}`);
         
-        // Symulacja OAuth - w rzeczywistości byłaby to integracja z rzeczywistymi dostawcami
-        switch (provider) {
-            case 'google':
-                this.simulateOAuthLogin(provider, 'Google Account');
-                break;
-            case 'github':
-                this.simulateOAuthLogin(provider, 'GitHub Profile');
-                break;
-            case 'discord':
-                this.simulateOAuthLogin(provider, 'Discord User');
-                break;
-            default:
-                showNotification('Nieobsługiwany dostawca OAuth', 'error');
+        try {
+            // Sprawdzenie czy provider jest skonfigurowany
+            if (!window.OAuthConfig || !window.OAuthConfig[provider] || !window.OAuthConfig[provider].enabled) {
+                // Fallback do symulacji jeśli provider nie jest skonfigurowany
+                console.warn(`Provider ${provider} nie jest skonfigurowany. Używam symulacji.`);
+                this.simulateOAuthLogin(provider);
+                return;
+            }
+            
+            // Pokazanie loading state
+            this.showOAuthLoading(provider);
+            
+            // Rozpoczęcie prawdziwego OAuth flow
+            const authUrl = window.OAuthHelpers.buildAuthUrl(provider);
+            
+            // Otwarcie okna OAuth w popup
+            const popup = window.open(
+                authUrl,
+                `oauth_${provider}`,
+                'width=500,height=600,scrollbars=yes,resizable=yes'
+            );
+            
+            if (!popup) {
+                throw new Error('Popup zostało zablokowane. Sprawdź ustawienia przeglądarki.');
+            }
+            
+            // Nasłuchiwanie na zamknięcie popup lub callback
+            const result = await this.waitForOAuthCallback(popup, provider);
+            
+            if (result.success) {
+                await this.processOAuthSuccess(result.data, provider);
+            } else {
+                throw new Error(result.error || 'OAuth authorization failed');
+            }
+            
+        } catch (error) {
+            console.error(`${provider} OAuth error:`, error);
+            showNotification(`Błąd logowania przez ${provider}: ${error.message}`, 'error');
+            this.hideOAuthLoading(provider);
         }
     }
 
-    // Symulacja OAuth logowania
-    async simulateOAuthLogin(provider, displayName) {
+    // Oczekiwanie na callback z OAuth
+    waitForOAuthCallback(popup, provider) {
+        return new Promise((resolve, reject) => {
+            const checkClosed = setInterval(() => {
+                if (popup.closed) {
+                    clearInterval(checkClosed);
+                    this.hideOAuthLoading(provider);
+                    reject(new Error('OAuth anulowane przez użytkownika'));
+                }
+            }, 1000);
+            
+            // Nasłuchiwanie na wiadomości z popup
+            const messageListener = (event) => {
+                if (event.origin !== window.location.origin) return;
+                
+                if (event.data.type === 'OAUTH_SUCCESS' && event.data.provider === provider) {
+                    clearInterval(checkClosed);
+                    window.removeEventListener('message', messageListener);
+                    popup.close();
+                    this.hideOAuthLoading(provider);
+                    resolve({ success: true, data: event.data });
+                }
+                
+                if (event.data.type === 'OAUTH_ERROR' && event.data.provider === provider) {
+                    clearInterval(checkClosed);
+                    window.removeEventListener('message', messageListener);
+                    popup.close();
+                    this.hideOAuthLoading(provider);
+                    resolve({ success: false, error: event.data.error });
+                }
+            };
+            
+            window.addEventListener('message', messageListener);
+            
+            // Timeout po 5 minutach
+            setTimeout(() => {
+                clearInterval(checkClosed);
+                window.removeEventListener('message', messageListener);
+                if (!popup.closed) popup.close();
+                this.hideOAuthLoading(provider);
+                reject(new Error('OAuth timeout'));
+            }, 300000); // 5 minut
+        });
+    }
+
+    // Przetworzenie udanej autoryzacji OAuth
+    async processOAuthSuccess(data, provider) {
         try {
-            // W rzeczywistości tu byłaby komunikacja z OAuth API
+            // Weryfikacja state dla bezpieczeństwa
+            if (!window.OAuthHelpers.verifyState(provider, data.state)) {
+                throw new Error('Invalid state parameter');
+            }
+            
+            // Utworzenie użytkownika z danych OAuth
+            const user = {
+                id: `${provider}_${data.user.id}`,
+                username: data.user.username || data.user.login || data.user.name || `${provider}_user`,
+                email: data.user.email,
+                displayName: data.user.name || data.user.display_name || data.user.login,
+                avatar: data.user.avatar_url || data.user.picture || data.user.avatar || `https://via.placeholder.com/100x100?text=${provider[0].toUpperCase()}`,
+                provider: provider,
+                providerId: data.user.id,
+                role: 'user',
+                joinDate: new Date().toISOString(),
+                permissions: ['upload_mods', 'comment', 'rate'],
+                oauthData: {
+                    accessToken: data.access_token, // Zapisane dla przyszłych API calls
+                    refreshToken: data.refresh_token,
+                    expiresAt: data.expires_in ? Date.now() + (data.expires_in * 1000) : null
+                }
+            };
+            
+            this.currentUser = user;
+            this.isLoggedIn = true;
+            this.saveUserSession();
+            this.updateUIState();
+            
+            this.closeAllModals();
+            showNotification(`Pomyślnie zalogowano przez ${provider.charAt(0).toUpperCase() + provider.slice(1)}!`, 'success');
+            
+        } catch (error) {
+            console.error('OAuth processing error:', error);
+            throw error;
+        }
+    }
+
+    // Pokazanie loading state dla OAuth
+    showOAuthLoading(provider) {
+        const btn = document.querySelector(`.oauth-btn[data-provider="${provider}"]`);
+        if (btn) {
+            btn.disabled = true;
+            btn.classList.add('loading');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `
+                <div class="oauth-loading">
+                    <div class="oauth-spinner"></div>
+                    <span>Łączenie...</span>
+                </div>
+            `;
+            btn.dataset.originalText = originalText;
+        }
+    }
+
+    // Ukrycie loading state dla OAuth
+    hideOAuthLoading(provider) {
+        const btn = document.querySelector(`.oauth-btn[data-provider="${provider}"]`);
+        if (btn) {
+            btn.disabled = false;
+            btn.classList.remove('loading');
+            if (btn.dataset.originalText) {
+                btn.innerHTML = btn.dataset.originalText;
+                delete btn.dataset.originalText;
+            }
+        }
+    }
+
+    // Symulacja OAuth logowania (fallback)
+    async simulateOAuthLogin(provider) {
+        try {
+            this.showOAuthLoading(provider);
             await new Promise(resolve => setTimeout(resolve, 1500));
             
             const user = {
-                id: Date.now(),
+                id: `sim_${provider}_${Date.now()}`,
                 username: `${provider}_user_${Math.random().toString(36).substr(2, 9)}`,
                 email: `user@${provider}.example.com`,
-                displayName: displayName,
+                displayName: `${provider.charAt(0).toUpperCase() + provider.slice(1)} User`,
                 avatar: `https://via.placeholder.com/100x100?text=${provider[0].toUpperCase()}`,
                 provider: provider,
                 role: 'user',
                 joinDate: new Date().toISOString(),
-                permissions: ['upload_mods', 'comment', 'rate']
+                permissions: ['upload_mods', 'comment', 'rate'],
+                isSimulated: true
             };
 
             this.currentUser = user;
@@ -204,10 +347,12 @@ class AuthManager {
             this.updateUIState();
             
             this.closeAllModals();
-            showNotification(`Zalogowano przez ${provider.charAt(0).toUpperCase() + provider.slice(1)}!`, 'success');
+            this.hideOAuthLoading(provider);
+            showNotification(`Zalogowano przez ${provider} (symulacja)!`, 'success');
             
         } catch (error) {
-            console.error(`${provider} OAuth error:`, error);
+            console.error(`${provider} OAuth simulation error:`, error);
+            this.hideOAuthLoading(provider);
             showNotification(`Błąd logowania przez ${provider}`, 'error');
         }
     }

@@ -211,53 +211,8 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Notification system
-function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
-    notification.innerHTML = `
-        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'times-circle' : 'info-circle'}"></i>
-        <span>${message}</span>
-    `;
-    
-    let backgroundColor = '#2196F3'; // info
-    if (type === 'success') backgroundColor = '#4CAF50';
-    if (type === 'error') backgroundColor = '#F44336';
-    
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        background: ${backgroundColor};
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        z-index: 10000;
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    `;
-    
-    document.body.appendChild(notification);
-    
-    // Animate in
-    setTimeout(() => {
-        notification.style.transform = 'translateX(0)';
-    }, 100);
-    
-    // Remove after delay
-    setTimeout(() => {
-        notification.style.transform = 'translateX(100%)';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 300);
-    }, 3000);
-}
+// Notification system jest teraz w osobnym module (notifications.js)
+// Stara funkcja showNotification została zastąpiona przez notificationManager
 
 // Modal system for previews
 function showModal(modName) {
