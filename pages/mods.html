@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mody FiveM - SBPack | revsafeDEV</title>
+    <meta name="description" content="Przeglądaj i pobierz najlepsze mody FiveM. Skrypty, pojazdy, mapy, skiny i więcej dla Twojego serwera.">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo" ondblclick="showLoginModal()" title="Podwójny klik dla dostępu administratora">
+                <i class="fas fa-gamepad"></i>
+                <span>SBPack</span>
+            </div>
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">Główna</a>
+                <a href="mods.html" class="nav-link active">Mody</a>
+                <a href="support.html" class="nav-link">Support</a>
+                <a href="support-chat.html" class="nav-link">Chat Support</a>
+                <a href="contact.html" class="nav-link">Kontakt</a>
+            </nav>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="admin-panel" style="display: none;">
+        <div class="admin-header">
+            <h2><i class="fas fa-cog"></i> Panel Administracyjny</h2>
+            <button class="admin-close" onclick="closeAdminPanel()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="admin-content">
+            <div class="admin-section">
+                <h3>Dodaj Nowy Mod</h3>
+                <form id="addModForm">
+                    <div class="form-group">
+                        <label>Nazwa Moda:</label>
+                        <input type="text" id="modName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Opis:</label>
+                        <textarea id="modDescription" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Cena (PLN):</label>
+                        <input type="number" id="modPrice" step="0.01" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Kategoria:</label>
+                        <select id="modCategory" required>
+                            <option value="">Wybierz kategorię</option>
+                            <option value="skrypty">Skrypty</option>
+                            <option value="pojazdy">Pojazdy</option>
+                            <option value="mapy">Mapy</option>
+                            <option value="skins">Skiny</option>
+                            <option value="inne">Inne</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Status:</label>
+                        <select id="modStatus" required>
+                            <option value="available">Dostępny</option>
+                            <option value="in-development">W budowie</option>
+                            <option value="unavailable">Niedostępny</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>URL Obrazka:</label>
+                        <input type="url" id="modImage" placeholder="https://example.com/image.jpg">
+                    </div>
+                    <div class="form-group">
+                        <label>Link do pobrania/zakupu:</label>
+                        <input type="url" id="modDownloadLink" placeholder="https://example.com/download">
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Dodaj Mod
+                    </button>
+                </form>
+            </div>
+            <div class="admin-section">
+                <h3>Zarządzaj Modami</h3>
+                <div id="adminModsList" class="admin-mods-list"></div>
+            </div>
+        </div>
+        
+        <!-- Admin Navigation -->
+        <div class="admin-nav">
+            <button class="admin-nav-btn active" onclick="showAdminSection('mods')">
+                <i class="fas fa-gamepad"></i> Mody
+            </button>
+            <button class="admin-nav-btn" onclick="showAdminSection('admins')">
+                <i class="fas fa-users-cog"></i> Administratorzy
+            </button>
+            <button class="admin-nav-btn" onclick="showAdminSection('support')">
+                <i class="fas fa-headset"></i> Support
+            </button>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="login-modal" style="display: none;">
+        <div class="login-content">
+            <h2><i class="fas fa-lock"></i> Logowanie Administratora</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Hasło:</label>
+                    <input type="password" id="adminPassword" placeholder="Wprowadź hasło administratora" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Zaloguj
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="closeLoginModal()">
+                    Anuluj
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mods Section -->
+    <section class="mods-section">
+        <div class="container">
+            <h1>Nasze Mody</h1>
+            <p class="section-description">Odkryj kolekcję wysokiej jakości modów, skryptów i dodatków dla FiveM. Wszystkie mody są sprawdzone, bezpieczne i gotowe do użycia na Twoim serwerze.</p>
+            
+            <!-- Filter Buttons -->
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-th"></i>
+                    Wszystkie
+                </button>
+                <button class="filter-btn" data-filter="skrypty">
+                    <i class="fas fa-code"></i>
+                    Skrypty
+                </button>
+                <button class="filter-btn" data-filter="pojazdy">
+                    <i class="fas fa-car"></i>
+                    Pojazdy
+                </button>
+                <button class="filter-btn" data-filter="mapy">
+                    <i class="fas fa-map"></i>
+                    Mapy
+                </button>
+                <button class="filter-btn" data-filter="skins">
+                    <i class="fas fa-tshirt"></i>
+                    Skiny
+                </button>
+                <button class="filter-btn" data-filter="free">
+                    <i class="fas fa-gift"></i>
+                    Darmowe
+                </button>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-download"></i>
+                    <div class="stat-number" id="totalDownloads">5,039</div>
+                    <div class="stat-label">Pobrań</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-gamepad"></i>
+                    <div class="stat-number" id="totalMods">4</div>
+                    <div class="stat-label">Modów</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <div class="stat-number">1,250</div>
+                    <div class="stat-label">Zadowolonych klientów</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-star"></i>
+                    <div class="stat-number">4.9</div>
+                    <div class="stat-label">Ocena</div>
+                </div>
+            </div>
+
+            <!-- Mods Grid -->
+            <div id="modsGrid" class="mods-grid">
+                <!-- Mods will be loaded here by JavaScript -->
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more-container" style="display: none;">
+                <button class="btn btn-secondary load-more-btn">
+                    <i class="fas fa-plus"></i>
+                    Załaduj więcej modów
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Info Section -->
+    <section class="payment-info">
+        <div class="container">
+            <h2>Bezpieczne płatności</h2>
+            <p>Wszystkie płatności są przetwarzane przez PayPal - bezpieczny i zaufany system płatności online.</p>
+            <div class="payment-features">
+                <div class="payment-feature">
+                    <i class="fab fa-paypal"></i>
+                    <h3>PayPal</h3>
+                    <p>Bezpieczne płatności kartą lub przelewem</p>
+                </div>
+                <div class="payment-feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Ochrona kupującego</h3>
+                    <p>Pełna ochrona Twoich transakcji</p>
+                </div>
+                <div class="payment-feature">
+                    <i class="fas fa-download"></i>
+                    <h3>Natychmiastowy dostęp</h3>
+                    <p>Pobierz mody zaraz po opłaceniu</p>
+                </div>
+                <div class="payment-feature">
+                    <i class="fas fa-headset"></i>
+                    <h3>Wsparcie 24/7</h3>
+                    <p>Pomoc techniczna w razie problemów</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <div class="logo">
+                        <i class="fas fa-gamepad"></i>
+                        <span>SBPack</span>
+                    </div>
+                    <p>Najlepsze mody FiveM od revsafeDEV</p>
+                </div>
+                <div class="footer-right">
+                    <p>&copy; 2025 SBPack by revsafeDEV. Wszystkie prawa zastrzeżone.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Admin Access Button -->
+    <div class="admin-access-btn" onclick="showLoginModal()">
+        <i class="fas fa-cog"></i>
+    </div>
+
+    <script src="../assets/js/script.js"></script>
+    <script>
+        // Filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const modCards = document.querySelectorAll('.mod-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Filter mods
+                    setTimeout(() => {
+                        const allMods = modsManager.getAllMods();
+                        const filteredMods = filterMods(allMods, filter);
+                        renderFilteredMods(filteredMods);
+                    }, 100);
+                });
+            });
+
+            // Update stats
+            updateStats();
+        });
+
+        function filterMods(mods, filter) {
+            if (filter === 'all') {
+                return mods;
+            } else if (filter === 'free') {
+                return mods.filter(mod => mod.price === 0);
+            } else {
+                return mods.filter(mod => mod.category === filter);
+            }
+        }
+
+        function renderFilteredMods(mods) {
+            const modsGrid = document.getElementById('modsGrid');
+            modsGrid.innerHTML = '';
+            
+            mods.forEach(mod => {
+                const modCard = modsManager.createModCard(mod);
+                modsGrid.appendChild(modCard);
+            });
+        }
+
+        function updateStats() {
+            setTimeout(() => {
+                const allMods = modsManager.getAllMods();
+                const totalDownloads = allMods.reduce((sum, mod) => sum + mod.downloads, 0);
+                
+                document.getElementById('totalDownloads').textContent = totalDownloads.toLocaleString();
+                document.getElementById('totalMods').textContent = allMods.length;
+            }, 500);
+        }
+
+        // Add search functionality specific to mods page
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.mods-section .container');
+            const title = container.querySelector('h1');
+            
+            const searchInput = document.createElement('input');
+            searchInput.type = 'text';
+            searchInput.placeholder = 'Szukaj modów...';
+            searchInput.className = 'search-input';
+            searchInput.style.cssText = `
+                padding: 0.75rem 1rem;
+                border: 2px solid var(--primary-color);
+                border-radius: 25px;
+                background: var(--darker-bg);
+                color: var(--text-light);
+                font-size: 1rem;
+                margin: 2rem auto;
+                width: 100%;
+                max-width: 400px;
+                display: block;
+            `;
+            
+            // Insert after description
+            const description = container.querySelector('.section-description');
+            description.insertAdjacentElement('afterend', searchInput);
+            
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const modCards = document.querySelectorAll('.mod-card');
+                
+                modCards.forEach(card => {
+                    const titleElement = card.querySelector('h3');
+                    const descriptionElement = card.querySelector('p');
+                    
+                    if (!titleElement || !descriptionElement) return;
+                    
+                    const title = titleElement.textContent.toLowerCase();
+                    const description = descriptionElement.textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                        card.style.display = 'block';
+                        card.style.animation = 'fadeInUp 0.3s ease-out';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Custom styles for mods page
+        const customStyles = `
+            .mods-section {
+                padding: 120px 0 80px;
+            }
+
+            .mods-section h1 {
+                font-size: 3rem;
+                text-align: center;
+                margin-bottom: 1rem;
+                background: var(--gradient);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .section-description {
+                text-align: center;
+                font-size: 1.2rem;
+                color: var(--text-light);
+                max-width: 800px;
+                margin: 0 auto 3rem;
+                line-height: 1.6;
+            }
+
+            .filter-buttons {
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+                margin-bottom: 3rem;
+                flex-wrap: wrap;
+            }
+
+            .filter-btn {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.75rem 1.5rem;
+                background: var(--card-bg);
+                color: var(--text-light);
+                border: 2px solid transparent;
+                border-radius: 25px;
+                cursor: pointer;
+                transition: var(--transition);
+                font-weight: 500;
+                text-decoration: none;
+            }
+
+            .filter-btn:hover,
+            .filter-btn.active {
+                background: var(--primary-color);
+                color: var(--text-white);
+                transform: translateY(-2px);
+                box-shadow: var(--shadow);
+            }
+
+            .stats-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+                margin-bottom: 4rem;
+            }
+
+            .stat-card {
+                background: var(--card-bg);
+                padding: 2rem;
+                border-radius: var(--border-radius-lg);
+                text-align: center;
+                border: 1px solid var(--border-color);
+                transition: var(--transition);
+            }
+
+            .stat-card:hover {
+                transform: translateY(-5px);
+                box-shadow: var(--shadow);
+            }
+
+            .stat-card i {
+                font-size: 2.5rem;
+                color: var(--primary-color);
+                margin-bottom: 1rem;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+                font-weight: 700;
+                color: var(--text-primary);
+                margin-bottom: 0.5rem;
+            }
+
+            .stat-label {
+                color: var(--text-light);
+                font-size: 1.1rem;
+            }
+
+            .payment-info {
+                background: var(--darker-bg);
+                padding: 80px 0;
+            }
+
+            .payment-info h2 {
+                text-align: center;
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+                color: var(--text-primary);
+            }
+
+            .payment-info > .container > p {
+                text-align: center;
+                font-size: 1.2rem;
+                color: var(--text-light);
+                margin-bottom: 3rem;
+            }
+
+            .payment-features {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+            }
+
+            .payment-feature {
+                text-align: center;
+                padding: 2rem;
+            }
+
+            .payment-feature i {
+                font-size: 3rem;
+                color: var(--primary-color);
+                margin-bottom: 1rem;
+            }
+
+            .payment-feature h3 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+                color: var(--text-primary);
+            }
+
+            .payment-feature p {
+                color: var(--text-light);
+            }
+
+            .load-more-container {
+                text-align: center;
+                margin-top: 3rem;
+            }
+
+            @media (max-width: 768px) {
+                .mods-section h1 {
+                    font-size: 2rem;
+                }
+                
+                .filter-buttons {
+                    gap: 0.5rem;
+                }
+                
+                .filter-btn {
+                    padding: 0.5rem 1rem;
+                    font-size: 0.9rem;
+                }
+                
+                .stats-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 1rem;
+                }
+                
+                .stat-card {
+                    padding: 1.5rem;
+                }
+                
+                .stat-number {
+                    font-size: 2rem;
+                }
+            }
+        `;
+
+        // Add custom styles to page
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = customStyles;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>

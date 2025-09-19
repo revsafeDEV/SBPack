@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Support - SBPack | revsafeDEV</title>
+    <meta name="description" content="Czat na żywo z zespołem wsparcia SBPack. Szybka pomoc w rozwiązywaniu problemów z modami FiveM.">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo" ondblclick="showLoginModal()" title="Podwójny klik dla dostępu administratora">
+                <i class="fas fa-gamepad"></i>
+                <span>SBPack</span>
+            </div>
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">Główna</a>
+                <a href="mods.html" class="nav-link">Mody</a>
+                <a href="support.html" class="nav-link">Support</a>
+                <a href="support-chat.html" class="nav-link active">Chat Support</a>
+                <a href="contact.html" class="nav-link">Kontakt</a>
+            </nav>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="login-modal" style="display: none;">
+        <div class="login-content">
+            <h2><i class="fas fa-lock"></i> Logowanie Administratora</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Hasło:</label>
+                    <input type="password" id="adminPassword" placeholder="Wprowadź hasło administratora" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Zaloguj
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="closeLoginModal()">
+                    Anuluj
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Chat Section -->
+    <section class="chat-section">
+        <div class="container">
+            <div class="chat-header">
+                <h1>Chat Support</h1>
+                <p>Czat na żywo z naszym zespołem wsparcia. Szybka pomoc w rozwiązywaniu problemów.</p>
+            </div>
+
+            <div class="chat-container">
+                <!-- Chat Status -->
+                <div class="chat-status" id="chatStatus">
+                    <div class="status-indicator offline" id="statusIndicator">
+                        <div class="status-dot"></div>
+                        <span id="statusText">Offline</span>
+                    </div>
+                    <div class="support-hours">
+                        <i class="fas fa-clock"></i>
+                        <span>Godziny wsparcia: Pon-Sob 9:00-18:00 CET</span>
+                    </div>
+                </div>
+
+                <!-- Chat Window -->
+                <div class="chat-window" id="chatWindow">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message bot-message">
+                            <div class="message-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="message-content">
+                                <div class="message-text">
+                                    Witaj! Jestem botem wsparcia SBPack. Jak mogę Ci pomóc? 
+                                    W przypadku skomplikowanych problemów połączę Cię z naszym zespołem.
+                                </div>
+                                <div class="message-time">Teraz</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-container">
+                        <div class="user-info" id="userInfo" style="display: none;">
+                            <div class="user-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="user-details">
+                                <div class="user-name" id="userName"></div>
+                                <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                                    <span>Pisze...</span>
+                                    <div class="typing-dots">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chat-input-area">
+                            <input type="text" id="chatInput" placeholder="Wpisz swoją wiadomość..." disabled>
+                            <button id="sendButton" class="send-button" disabled>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                            <button id="attachButton" class="attach-button">
+                                <i class="fas fa-paperclip"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Setup Form -->
+                <div class="user-setup" id="userSetup">
+                    <h3>Zacznij rozmowę</h3>
+                    <p>Podaj swoje dane, aby rozpocząć czat z naszym zespołem wsparcia</p>
+                    
+                    <form id="userSetupForm">
+                        <div class="form-group">
+                            <label for="setupName">Imię i nazwisko *</label>
+                            <input type="text" id="setupName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="setupEmail">Email *</label>
+                            <input type="email" id="setupEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="setupIssue">Krótko opisz problem *</label>
+                            <textarea id="setupIssue" rows="3" placeholder="Np. Problem z instalacją moda ESX Jobs" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-comments"></i>
+                            Rozpocznij czat
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h3>Szybkie akcje</h3>
+                <div class="actions-grid">
+                    <button class="action-button" onclick="sendQuickMessage('Potrzebuję pomocy z instalacją moda')">
+                        <i class="fas fa-download"></i>
+                        <span>Pomoc z instalacją</span>
+                    </button>
+                    <button class="action-button" onclick="sendQuickMessage('Mam problem z płatnością PayPal')">
+                        <i class="fas fa-credit-card"></i>
+                        <span>Problem z płatnością</span>
+                    </button>
+                    <button class="action-button" onclick="sendQuickMessage('Mod nie działa poprawnie')">
+                        <i class="fas fa-bug"></i>
+                        <span>Zgłoś błąd</span>
+                    </button>
+                    <button class="action-button" onclick="sendQuickMessage('Chciałbym zaproponować nową funkcję')">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Propozycja funkcji</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- FAQ -->
+            <div class="chat-faq">
+                <h3>Często zadawane pytania</h3>
+                <div class="faq-items">
+                    <div class="faq-quick-item" onclick="sendQuickMessage('Jak zainstalować mod na serwerze FiveM?')">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Jak zainstalować mod?</span>
+                    </div>
+                    <div class="faq-quick-item" onclick="sendQuickMessage('Czy mody są kompatybilne z ESX?')">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Kompatybilność z ESX?</span>
+                    </div>
+                    <div class="faq-quick-item" onclick="sendQuickMessage('Jak otrzymać zwrot pieniędzy?')">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Zwrot pieniędzy?</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <div class="logo">
+                        <i class="fas fa-gamepad"></i>
+                        <span>SBPack</span>
+                    </div>
+                    <p>Najlepsze mody FiveM od revsafeDEV</p>
+                </div>
+                <div class="footer-right">
+                    <p>&copy; 2025 SBPack by revsafeDEV. Wszystkie prawa zastrzeżone.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Admin Access Button -->
+    <div class="admin-access-btn" onclick="showLoginModal()">
+        <i class="fas fa-cog"></i>
+    </div>
+
+    <script src="../assets/js/script.js"></script>
+    <script>
+        // Chat System
+        class SupportChat {
+            constructor() {
+                this.messages = [];
+                this.userName = '';
+                this.userEmail = '';
+                this.isOnline = false;
+                this.chatActive = false;
+                this.botResponses = {
+                    'instalacja': [
+                        'Aby zainstalować mod na serwerze FiveM:',
+                        '1. Pobierz plik moda z naszej strony',
+                        '2. Wypakuj do folderu resources',
+                        '3. Dodaj "start nazwa_moda" do server.cfg',
+                        '4. Zrestartuj serwer',
+                        'Czy potrzebujesz pomocy z konkretnym modem?'
+                    ],
+                    'płatność': [
+                        'W przypadku problemów z płatnością PayPal:',
+                        '• Sprawdź czy transakcja została zaliczona',
+                        '• Skontaktuj się z nami podając numer transakcji',
+                        '• Oferujemy 30-dniową gwarancję zwrotu',
+                        'Czy mogę pomóc Ci z konkretnym problemem?'
+                    ],
+                    'błąd': [
+                        'Aby zgłosić błąd, potrzebuję następujących informacji:',
+                        '• Nazwa moda, z którym masz problem',
+                        '• Wersja serwera FiveM',
+                        '• Błędy z konsoli serwera',
+                        '• Krótki opis problemu',
+                        'Proszę podaj te informacje, a postaram się pomóc.'
+                    ],
+                    'default': [
+                        'Dziękuję za wiadomość! Rozumiem, że potrzebujesz pomocy.',
+                        'Mogę pomóc Ci z podstawowymi pytaniami. W przypadku bardziej skomplikowanych problemów połączę Cię z naszym zespołem.',
+                        'Jak mogę Ci pomóc?'
+                    ]
+                };
+                
+                this.initializeChat();
+            }
+
+            initializeChat() {
+                // Check if chat is during business hours
+                this.checkBusinessHours();
+                
+                // Setup form handler
+                document.getElementById('userSetupForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.startChat();
+                });
+
+                // Chat input handler
+                document.getElementById('chatInput').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.sendMessage();
+                    }
+                });
+
+                document.getElementById('sendButton').addEventListener('click', () => {
+                    this.sendMessage();
+                });
+
+                // Typing indicator
+                document.getElementById('chatInput').addEventListener('input', () => {
+                    this.showTypingIndicator();
+                });
+
+                // Auto-hide typing indicator
+                setTimeout(() => {
+                    this.hideTypingIndicator();
+                }, 3000);
+            }
+
+            checkBusinessHours() {
+                const now = new Date();
+                const hour = now.getHours();
+                const day = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
+                
+                // Business hours: Mon-Sat 9:00-18:00 CET
+                const isBusinessDay = day >= 1 && day <= 6;
+                const isBusinessHour = hour >= 9 && hour < 18;
+                
+                this.isOnline = isBusinessDay && isBusinessHour;
+                
+                const statusIndicator = document.getElementById('statusIndicator');
+                const statusText = document.getElementById('statusText');
+                
+                if (this.isOnline) {
+                    statusIndicator.className = 'status-indicator online';
+                    statusText.textContent = 'Online - Jesteśmy dostępni';
+                } else {
+                    statusIndicator.className = 'status-indicator offline';
+                    statusText.textContent = 'Offline - Poza godzinami pracy';
+                }
+            }
+
+            startChat() {
+                const name = document.getElementById('setupName').value;
+                const email = document.getElementById('setupEmail').value;
+                const issue = document.getElementById('setupIssue').value;
+
+                this.userName = name;
+                this.userEmail = email;
+                this.chatActive = true;
+
+                // Hide setup form and show chat
+                document.getElementById('userSetup').style.display = 'none';
+                document.getElementById('chatWindow').style.display = 'flex';
+                document.getElementById('userInfo').style.display = 'flex';
+                document.getElementById('userName').textContent = name;
+                
+                // Enable chat input
+                document.getElementById('chatInput').disabled = false;
+                document.getElementById('sendButton').disabled = false;
+
+                // Send initial user message
+                this.addMessage(issue, 'user');
+                
+                // Bot response based on issue content
+                setTimeout(() => {
+                    this.generateBotResponse(issue);
+                }, 1000);
+            }
+
+            addMessage(text, sender, timestamp = null) {
+                const messagesContainer = document.getElementById('chatMessages');
+                const message = document.createElement('div');
+                message.className = `message ${sender}-message`;
+
+                const avatar = document.createElement('div');
+                avatar.className = 'message-avatar';
+                avatar.innerHTML = sender === 'user' ? '<i class="fas fa-user"></i>' : '<i class="fas fa-robot"></i>';
+
+                const content = document.createElement('div');
+                content.className = 'message-content';
+
+                const messageText = document.createElement('div');
+                messageText.className = 'message-text';
+                messageText.textContent = text;
+
+                const messageTime = document.createElement('div');
+                messageTime.className = 'message-time';
+                messageTime.textContent = timestamp || this.getCurrentTime();
+
+                content.appendChild(messageText);
+                content.appendChild(messageTime);
+                message.appendChild(avatar);
+                message.appendChild(content);
+
+                messagesContainer.appendChild(message);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+                this.messages.push({
+                    text,
+                    sender,
+                    timestamp: timestamp || new Date()
+                });
+            }
+
+            sendMessage() {
+                const input = document.getElementById('chatInput');
+                const text = input.value.trim();
+
+                if (text && this.chatActive) {
+                    this.addMessage(text, 'user');
+                    input.value = '';
+
+                    // Generate bot response
+                    setTimeout(() => {
+                        this.generateBotResponse(text);
+                    }, 1000 + Math.random() * 2000);
+                }
+            }
+
+            generateBotResponse(userMessage) {
+                const message = userMessage.toLowerCase();
+                let responses = this.botResponses.default;
+
+                if (message.includes('instalacja') || message.includes('install') || message.includes('zainstalować')) {
+                    responses = this.botResponses.instalacja;
+                } else if (message.includes('płatność') || message.includes('paypal') || message.includes('payment')) {
+                    responses = this.botResponses.płatność;
+                } else if (message.includes('błąd') || message.includes('error') || message.includes('nie działa')) {
+                    responses = this.botResponses.błąd;
+                }
+
+                responses.forEach((response, index) => {
+                    setTimeout(() => {
+                        this.addMessage(response, 'bot');
+                    }, (index + 1) * 800);
+                });
+            }
+
+            showTypingIndicator() {
+                document.getElementById('typingIndicator').style.display = 'flex';
+            }
+
+            hideTypingIndicator() {
+                document.getElementById('typingIndicator').style.display = 'none';
+            }
+
+            getCurrentTime() {
+                return new Date().toLocaleTimeString('pl-PL', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+        }
+
+        // Quick message function
+        function sendQuickMessage(message) {
+            if (window.supportChat && window.supportChat.chatActive) {
+                document.getElementById('chatInput').value = message;
+                window.supportChat.sendMessage();
+            } else {
+                // If chat not active, fill the issue field in setup form
+                document.getElementById('setupIssue').value = message;
+            }
+        }
+
+        // Initialize chat system
+        document.addEventListener('DOMContentLoaded', () => {
+            window.supportChat = new SupportChat();
+        });
+
+        // Custom styles for chat page
+        const chatStyles = `
+            .chat-section {
+                padding: 120px 0 80px;
+            }
+
+            .chat-header {
+                text-align: center;
+                margin-bottom: 3rem;
+            }
+
+            .chat-header h1 {
+                font-size: 3rem;
+                background: var(--gradient);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                margin-bottom: 1rem;
+            }
+
+            .chat-header p {
+                font-size: 1.2rem;
+                color: var(--text-light);
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .chat-container {
+                max-width: 800px;
+                margin: 0 auto 3rem;
+                background: var(--card-bg);
+                border-radius: var(--border-radius-lg);
+                border: 1px solid var(--border-color);
+                overflow: hidden;
+            }
+
+            .chat-status {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem 1.5rem;
+                background: var(--darker-bg);
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .status-indicator {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .status-dot {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                animation: pulse 2s infinite;
+            }
+
+            .status-indicator.online .status-dot {
+                background: var(--success-color);
+            }
+
+            .status-indicator.offline .status-dot {
+                background: var(--error-color);
+            }
+
+            .support-hours {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                color: var(--text-light);
+                font-size: 0.9rem;
+            }
+
+            .chat-window {
+                height: 500px;
+                display: none;
+                flex-direction: column;
+            }
+
+            .chat-messages {
+                flex: 1;
+                overflow-y: auto;
+                padding: 1rem;
+            }
+
+            .message {
+                display: flex;
+                gap: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .message-avatar {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+
+            .user-message .message-avatar {
+                background: var(--primary-color);
+                color: white;
+                order: 2;
+            }
+
+            .user-message .message-content {
+                order: 1;
+                text-align: right;
+            }
+
+            .bot-message .message-avatar {
+                background: var(--secondary-color);
+                color: white;
+            }
+
+            .message-content {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .message-text {
+                background: var(--darker-bg);
+                padding: 1rem;
+                border-radius: var(--border-radius);
+                color: var(--text-light);
+                line-height: 1.5;
+                white-space: pre-line;
+            }
+
+            .user-message .message-text {
+                background: var(--primary-color);
+                color: white;
+            }
+
+            .message-time {
+                font-size: 0.8rem;
+                color: var(--text-light);
+                margin-top: 0.5rem;
+            }
+
+            .chat-input-container {
+                border-top: 1px solid var(--border-color);
+                padding: 1rem;
+            }
+
+            .user-info {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .user-avatar {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                background: var(--primary-color);
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.9rem;
+            }
+
+            .user-name {
+                font-weight: 600;
+                color: var(--text-primary);
+            }
+
+            .typing-indicator {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                color: var(--text-light);
+                font-size: 0.9rem;
+            }
+
+            .typing-dots {
+                display: flex;
+                gap: 3px;
+            }
+
+            .typing-dots span {
+                width: 4px;
+                height: 4px;
+                border-radius: 50%;
+                background: var(--primary-color);
+                animation: typing 1.4s infinite;
+            }
+
+            .typing-dots span:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+
+            .typing-dots span:nth-child(3) {
+                animation-delay: 0.4s;
+            }
+
+            .chat-input-area {
+                display: flex;
+                gap: 0.5rem;
+            }
+
+            .chat-input-area input {
+                flex: 1;
+                padding: 0.75rem 1rem;
+                background: var(--darker-bg);
+                border: 1px solid var(--border-color);
+                border-radius: 25px;
+                color: var(--text-light);
+                font-size: 1rem;
+            }
+
+            .send-button, .attach-button {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                border: none;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: var(--transition);
+            }
+
+            .send-button {
+                background: var(--primary-color);
+                color: white;
+            }
+
+            .send-button:hover {
+                background: var(--secondary-color);
+            }
+
+            .attach-button {
+                background: var(--card-bg);
+                color: var(--text-light);
+                border: 1px solid var(--border-color);
+            }
+
+            .user-setup {
+                padding: 2rem;
+                text-align: center;
+            }
+
+            .user-setup h3 {
+                color: var(--text-primary);
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .user-setup p {
+                color: var(--text-light);
+                margin-bottom: 2rem;
+            }
+
+            .quick-actions, .chat-faq {
+                margin-bottom: 3rem;
+                text-align: center;
+            }
+
+            .quick-actions h3, .chat-faq h3 {
+                color: var(--text-primary);
+                font-size: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .actions-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .action-button {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 1.5rem;
+                background: var(--card-bg);
+                border: 1px solid var(--border-color);
+                border-radius: var(--border-radius);
+                color: var(--text-light);
+                cursor: pointer;
+                transition: var(--transition);
+                text-align: center;
+            }
+
+            .action-button:hover {
+                background: var(--primary-color);
+                color: white;
+                transform: translateY(-2px);
+            }
+
+            .action-button i {
+                font-size: 1.5rem;
+            }
+
+            .faq-items {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+                justify-content: center;
+            }
+
+            .faq-quick-item {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.75rem 1rem;
+                background: var(--darker-bg);
+                border: 1px solid var(--border-color);
+                border-radius: 25px;
+                color: var(--text-light);
+                cursor: pointer;
+                transition: var(--transition);
+            }
+
+            .faq-quick-item:hover {
+                background: var(--primary-color);
+                color: white;
+            }
+
+            @keyframes pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.5; }
+            }
+
+            @keyframes typing {
+                0%, 60%, 100% { transform: translateY(0); }
+                30% { transform: translateY(-10px); }
+            }
+
+            @media (max-width: 768px) {
+                .chat-header h1 {
+                    font-size: 2rem;
+                }
+
+                .chat-status {
+                    flex-direction: column;
+                    gap: 0.5rem;
+                }
+
+                .actions-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .faq-items {
+                    flex-direction: column;
+                }
+            }
+        `;
+
+        // Add custom styles to page
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = chatStyles;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>

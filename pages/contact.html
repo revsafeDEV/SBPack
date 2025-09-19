@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt - SBPack | revsafeDEV</title>
+    <meta name="description" content="Skontaktuj się z zespołem SBPack. Formularz kontaktowy, Discord, email i inne sposoby komunikacji.">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo" ondblclick="showLoginModal()" title="Podwójny klik dla dostępu administratora">
+                <i class="fas fa-gamepad"></i>
+                <span>SBPack</span>
+            </div>
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">Główna</a>
+                <a href="mods.html" class="nav-link">Mody</a>
+                <a href="support.html" class="nav-link">Support</a>
+                <a href="support-chat.html" class="nav-link">Chat Support</a>
+                <a href="contact.html" class="nav-link active">Kontakt</a>
+            </nav>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="login-modal" style="display: none;">
+        <div class="login-content">
+            <h2><i class="fas fa-lock"></i> Logowanie Administratora</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Hasło:</label>
+                    <input type="password" id="adminPassword" placeholder="Wprowadź hasło administratora" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Zaloguj
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="closeLoginModal()">
+                    Anuluj
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-header">
+                <h1>Skontaktuj się z nami</h1>
+                <p>Masz pytania? Potrzebujesz pomocy? A może chcesz nawiązać współpracę? Napisz do nas!</p>
+            </div>
+
+            <div class="contact-content">
+                <!-- Contact Info -->
+                <div class="contact-info">
+                    <h2>Informacje kontaktowe</h2>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="method-content">
+                                <h3>Email</h3>
+                                <p>revsafe777@gmail.com</p>
+                                <small>Odpowiadamy w ciągu 24 godzin</small>
+                            </div>
+                        </div>
+
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fab fa-discord"></i>
+                            </div>
+                            <div class="method-content">
+                                <h3>Discord</h3>
+                                <p>sebablyqt</p>
+                                <small>Szybka pomoc w czasie rzeczywistym</small>
+                            </div>
+                        </div>
+
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="method-content">
+                                <h3>GitHub</h3>
+                                <p>revsafeDEV</p>
+                                <small>Sprawdź nasze projekty i kod</small>
+                            </div>
+                        </div>
+
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="method-content">
+                                <h3>Godziny pracy</h3>
+                                <p>Pon-Sob: 9:00-18:00</p>
+                                <small>CET (Czas środkowoeuropejski)</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-social">
+                        <h3>Znajdź nas w internecie</h3>
+                        <div class="social-links">
+                            <a href="https://github.com/revsafeDEV" target="_blank" class="social-link">
+                                <i class="fab fa-github"></i>
+                                <span>GitHub</span>
+                            </a>
+                            <a href="https://discord.gg/fivem" target="_blank" class="social-link">
+                                <i class="fab fa-discord"></i>
+                                <span>Discord</span>
+                            </a>
+                            <a href="mailto:revsafe777@gmail.com" class="social-link">
+                                <i class="fas fa-envelope"></i>
+                                <span>Email</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form-section">
+                    <h2>Wyślij wiadomość</h2>
+                    <p>Wypełnij formularz, a odezwiemy się do Ciebie najszybciej jak to możliwe</p>
+                    
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactName">Imię i nazwisko *</label>
+                                <input type="text" id="contactName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactEmail">Email *</label>
+                                <input type="email" id="contactEmail" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactSubject">Temat *</label>
+                            <select id="contactSubject" required>
+                                <option value="">Wybierz temat</option>
+                                <option value="general">Ogólne pytanie</option>
+                                <option value="support">Pomoc techniczna</option>
+                                <option value="business">Współpraca biznesowa</option>
+                                <option value="bug">Zgłaszanie błędu</option>
+                                <option value="feature">Propozycja funkcji</option>
+                                <option value="billing">Pytania o płatności</option>
+                                <option value="other">Inne</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactMessage">Wiadomość *</label>
+                            <textarea id="contactMessage" rows="6" placeholder="Opisz szczegółowo swoją sprawę..." required></textarea>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="contactConsent" required>
+                                <span class="checkmark"></span>
+                                Wyrażam zgodę na przetwarzanie moich danych osobowych w celu udzielenia odpowiedzi na pytanie *
+                            </label>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="contactNewsletter">
+                                <span class="checkmark"></span>
+                                Chcę otrzymywać informacje o nowych modach i aktualizacjach
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Wyślij wiadomość
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="contact-faq">
+                <h2>Często zadawane pytania</h2>
+                <p>Może znajdziesz odpowiedź na swoje pytanie poniżej?</p>
+                
+                <div class="faq-grid">
+                    <div class="faq-card">
+                        <div class="faq-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Jak długo czekać na odpowiedź?</h3>
+                        <p>Na email odpowiadamy w ciągu 24 godzin. Na Discordzie jesteśmy dostępni w godzinach 9:00-18:00 CET.</p>
+                    </div>
+
+                    <div class="faq-card">
+                        <div class="faq-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <h3>W jakim języku pisać?</h3>
+                        <p>Możesz pisać po polsku lub po angielsku. Preferujemy język polski, ale chętnie odpowiemy też w języku angielskim.</p>
+                    </div>
+
+                    <div class="faq-card">
+                        <div class="faq-icon">
+                            <i class="fas fa-bug"></i>
+                        </div>
+                        <h3>Jak zgłosić błąd?</h3>
+                        <p>Wybierz "Zgłaszanie błędu" w formularzu i opisz problem szczegółowo. Załącz informacje o wersji serwera i błędach z konsoli.</p>
+                    </div>
+
+                    <div class="faq-card">
+                        <div class="faq-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Współpraca biznesowa</h3>
+                        <p>Jesteśmy otwarci na współpracę! Napisz do nas z propozycją, chętnie omówimy szczegóły.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <div class="logo">
+                        <i class="fas fa-gamepad"></i>
+                        <span>SBPack</span>
+                    </div>
+                    <p>Najlepsze mody FiveM od revsafeDEV</p>
+                </div>
+                <div class="footer-right">
+                    <p>&copy; 2025 SBPack by revsafeDEV. Wszystkie prawa zastrzeżone.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Admin Access Button -->
+    <div class="admin-access-btn" onclick="showLoginModal()">
+        <i class="fas fa-cog"></i>
+    </div>
+
+    <script src="../assets/js/script.js"></script>
+    <script>
+        // Custom styles for contact page
+        const contactStyles = `
+            .contact-header {
+                text-align: center;
+                margin-bottom: 4rem;
+            }
+
+            .contact-header h1 {
+                font-size: 3rem;
+                background: var(--gradient);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                margin-bottom: 1rem;
+            }
+
+            .contact-header p {
+                font-size: 1.2rem;
+                color: var(--text-light);
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .contact-content {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+                margin-bottom: 4rem;
+            }
+
+            .contact-info h2,
+            .contact-form-section h2 {
+                color: var(--text-primary);
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .contact-form-section p {
+                color: var(--text-light);
+                margin-bottom: 2rem;
+            }
+
+            .contact-methods {
+                margin-bottom: 3rem;
+            }
+
+            .contact-method {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                margin-bottom: 2rem;
+                padding: 1.5rem;
+                background: var(--card-bg);
+                border-radius: var(--border-radius);
+                border: 1px solid var(--border-color);
+                transition: var(--transition);
+            }
+
+            .contact-method:hover {
+                transform: translateY(-2px);
+                box-shadow: var(--shadow-lg);
+            }
+
+            .method-icon {
+                width: 60px;
+                height: 60px;
+                background: var(--gradient);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+
+            .method-icon i {
+                font-size: 1.5rem;
+                color: var(--text-white);
+            }
+
+            .method-content h3 {
+                color: var(--text-primary);
+                margin-bottom: 0.5rem;
+                font-size: 1.1rem;
+            }
+
+            .method-content p {
+                color: var(--text-light);
+                margin-bottom: 0.25rem;
+                font-weight: 600;
+            }
+
+            .method-content small {
+                color: var(--text-light);
+                font-size: 0.9rem;
+            }
+
+            .contact-social h3 {
+                color: var(--text-primary);
+                margin-bottom: 1rem;
+                font-size: 1.5rem;
+            }
+
+            .social-links {
+                display: flex;
+                gap: 1rem;
+            }
+
+            .social-link {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.75rem 1rem;
+                background: var(--card-bg);
+                color: var(--text-light);
+                text-decoration: none;
+                border-radius: var(--border-radius);
+                border: 1px solid var(--border-color);
+                transition: var(--transition);
+            }
+
+            .social-link:hover {
+                background: var(--primary-color);
+                color: var(--text-white);
+                transform: translateY(-2px);
+            }
+
+            .form-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+
+            .checkbox-group {
+                margin: 1.5rem 0;
+            }
+
+            .checkbox-label {
+                display: flex;
+                align-items: flex-start;
+                gap: 0.75rem;
+                cursor: pointer;
+                color: var(--text-light);
+                line-height: 1.4;
+            }
+
+            .checkbox-label input[type="checkbox"] {
+                display: none;
+            }
+
+            .checkmark {
+                width: 20px;
+                height: 20px;
+                background: var(--darker-bg);
+                border: 2px solid var(--border-color);
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: var(--transition);
+                flex-shrink: 0;
+                margin-top: 2px;
+            }
+
+            .checkbox-label input[type="checkbox"]:checked + .checkmark {
+                background: var(--primary-color);
+                border-color: var(--primary-color);
+            }
+
+            .checkbox-label input[type="checkbox"]:checked + .checkmark::after {
+                content: '✓';
+                color: var(--text-white);
+                font-weight: bold;
+                font-size: 14px;
+            }
+
+            .contact-faq {
+                text-align: center;
+            }
+
+            .contact-faq h2 {
+                color: var(--text-primary);
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .contact-faq > p {
+                color: var(--text-light);
+                font-size: 1.1rem;
+                margin-bottom: 3rem;
+            }
+
+            .faq-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+            }
+
+            .faq-card {
+                background: var(--card-bg);
+                padding: 2rem;
+                border-radius: var(--border-radius-lg);
+                border: 1px solid var(--border-color);
+                transition: var(--transition);
+                text-align: center;
+            }
+
+            .faq-card:hover {
+                transform: translateY(-5px);
+                box-shadow: var(--shadow);
+            }
+
+            .faq-icon {
+                width: 80px;
+                height: 80px;
+                background: var(--gradient);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 1.5rem;
+            }
+
+            .faq-icon i {
+                font-size: 2rem;
+                color: var(--text-white);
+            }
+
+            .faq-card h3 {
+                color: var(--text-primary);
+                font-size: 1.25rem;
+                margin-bottom: 1rem;
+            }
+
+            .faq-card p {
+                color: var(--text-light);
+                line-height: 1.6;
+            }
+
+            @media (max-width: 768px) {
+                .contact-header h1 {
+                    font-size: 2rem;
+                }
+
+                .contact-content {
+                    grid-template-columns: 1fr;
+                    gap: 2rem;
+                }
+
+                .form-row {
+                    grid-template-columns: 1fr;
+                }
+
+                .social-links {
+                    flex-direction: column;
+                }
+
+                .faq-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .contact-method {
+                    flex-direction: column;
+                    text-align: center;
+                }
+            }
+        `;
+
+        // Add custom styles to page
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = contactStyles;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>

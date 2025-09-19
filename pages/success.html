@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Płatność zakończona sukcesem - SBPack | revsafeDEV</title>
+    <meta name="description" content="Dziękujemy za zakup! Twoja płatność została przetworzona pomyślnie.">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-gamepad"></i>
+                <span>SBPack</span>
+            </div>
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">Główna</a>
+                <a href="mods.html" class="nav-link">Mody</a>
+                <a href="support.html" class="nav-link">Support</a>
+                <a href="support-chat.html" class="nav-link">Chat Support</a>
+                <a href="contact.html" class="nav-link">Kontakt</a>
+            </nav>
+            <div class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Success Section -->
+    <section class="success-section">
+        <div class="container">
+            <div class="success-content">
+                <!-- Success Icon -->
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+
+                <!-- Success Message -->
+                <h1>Płatność zakończona sukcesem!</h1>
+                <p class="success-subtitle">Dziękujemy za zakup! Twoja transakcja została przetworzona pomyślnie.</p>
+
+                <!-- Transaction Details -->
+                <div class="transaction-details" id="transactionDetails">
+                    <h3>Szczegóły transakcji</h3>
+                    <div class="detail-item">
+                        <span class="detail-label">Status płatności:</span>
+                        <span class="detail-value success">Zakończone</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Data transakcji:</span>
+                        <span class="detail-value" id="transactionDate"></span>
+                    </div>
+                    <div class="detail-item" id="transactionIdRow" style="display: none;">
+                        <span class="detail-label">ID transakcji:</span>
+                        <span class="detail-value" id="transactionId"></span>
+                    </div>
+                    <div class="detail-item" id="payerIdRow" style="display: none;">
+                        <span class="detail-label">PayPal Payer ID:</span>
+                        <span class="detail-value" id="payerId"></span>
+                    </div>
+                </div>
+
+                <!-- Product Information -->
+                <div class="product-info" id="productInfo">
+                    <h3>Zakupiony produkt</h3>
+                    <div class="product-card">
+                        <div class="product-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="product-details">
+                            <h4 id="productName">Mod FiveM</h4>
+                            <p id="productDescription">Dziękujemy za zakup naszego moda!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Next Steps -->
+                <div class="next-steps">
+                    <h3>Co dalej?</h3>
+                    <div class="steps-grid">
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Sprawdź email</h4>
+                                <p>W ciągu 5 minut otrzymasz email z linkiem do pobrania</p>
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Pobierz mod</h4>
+                                <p>Kliknij w link w emailu, aby pobrać zakupiony mod</p>
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Zainstaluj na serwerze</h4>
+                                <p>Postępuj zgodnie z instrukcją instalacji dołączoną do moda</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Support -->
+                <div class="support-section">
+                    <h3>Potrzebujesz pomocy?</h3>
+                    <p>Jeśli masz problemy z pobraniem lub instalacją, skontaktuj się z nami:</p>
+                    <div class="support-options">
+                        <a href="support-chat.html" class="support-option">
+                            <i class="fas fa-comments"></i>
+                            <span>Chat na żywo</span>
+                        </a>
+                        <a href="support.html" class="support-option">
+                            <i class="fas fa-headset"></i>
+                            <span>Centrum wsparcia</span>
+                        </a>
+                        <a href="mailto:revsafe777@gmail.com" class="support-option">
+                            <i class="fas fa-envelope"></i>
+                            <span>Email: revsafe777@gmail.com</span>
+                        </a>
+                        <a href="https://discord.gg/fivem" target="_blank" class="support-option">
+                            <i class="fab fa-discord"></i>
+                            <span>Discord: sebablyqt</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="action-buttons">
+                    <a href="mods.html" class="btn btn-primary">
+                        <i class="fas fa-gamepad"></i>
+                        Przeglądaj więcej modów
+                    </a>
+                    <a href="../index.html" class="btn btn-secondary">
+                        <i class="fas fa-home"></i>
+                        Powrót na główną
+                    </a>
+                </div>
+
+                <!-- Receipt -->
+                <div class="receipt-section">
+                    <h4>Chcesz otrzymać paragon?</h4>
+                    <p>Jeśli potrzebujesz paragonu na firmę, napisz do nas na <a href="mailto:revsafe777@gmail.com">revsafe777@gmail.com</a> podając dane firmy i numer transakcji.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <div class="logo">
+                        <i class="fas fa-gamepad"></i>
+                        <span>SBPack</span>
+                    </div>
+                    <p>Najlepsze mody FiveM od revsafeDEV</p>
+                </div>
+                <div class="footer-right">
+                    <p>&copy; 2025 SBPack by revsafeDEV. Wszystkie prawa zastrzeżone.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Parse URL parameters for transaction details
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // Display transaction date
+            const transactionDate = new Date().toLocaleDateString('pl-PL', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('transactionDate').textContent = transactionDate;
+
+            // Check for PayPal return parameters
+            const transactionId = urlParams.get('txn_id') || urlParams.get('tx');
+            const payerId = urlParams.get('payer_id');
+            const itemName = urlParams.get('item_name');
+            const itemNumber = urlParams.get('item_number');
+
+            if (transactionId) {
+                document.getElementById('transactionIdRow').style.display = 'flex';
+                document.getElementById('transactionId').textContent = transactionId;
+            }
+
+            if (payerId) {
+                document.getElementById('payerIdRow').style.display = 'flex';
+                document.getElementById('payerId').textContent = payerId;
+            }
+
+            if (itemName) {
+                document.getElementById('productName').textContent = decodeURIComponent(itemName);
+            }
+
+            // Show animation
+            setTimeout(() => {
+                document.querySelector('.success-content').classList.add('animate-in');
+            }, 100);
+
+            // Auto-redirect to email check after 30 seconds
+            setTimeout(() => {
+                showEmailReminder();
+            }, 30000);
+
+            // Send confirmation email simulation
+            setTimeout(() => {
+                simulateEmailSent();
+            }, 2000);
+        });
+
+        function showEmailReminder() {
+            const notification = document.createElement('div');
+            notification.className = 'email-reminder';
+            notification.innerHTML = `
+                <div class="reminder-content">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <strong>Sprawdź swoją skrzynkę pocztową</strong>
+                        <p>Link do pobrania powinien już dotrzeć na Twój email</p>
+                    </div>
+                    <button onclick="this.parentElement.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remove after 10 seconds
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 10000);
+        }
+
+        function simulateEmailSent() {
+            showNotification('Email z linkiem do pobrania został wysłany!', 'success');
+        }
+
+        // Custom styles for success page
+        const successStyles = `
+            .success-section {
+                padding: 120px 0 80px;
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+            }
+
+            .success-content {
+                max-width: 800px;
+                margin: 0 auto;
+                text-align: center;
+                opacity: 0;
+                transform: translateY(30px);
+                transition: all 0.6s ease;
+            }
+
+            .success-content.animate-in {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .success-icon {
+                width: 120px;
+                height: 120px;
+                background: var(--gradient);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 2rem;
+                box-shadow: var(--shadow);
+            }
+
+            .success-icon i {
+                font-size: 4rem;
+                color: white;
+            }
+
+            .success-content h1 {
+                font-size: 3rem;
+                background: var(--gradient);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                margin-bottom: 1rem;
+            }
+
+            .success-subtitle {
+                font-size: 1.2rem;
+                color: var(--text-light);
+                margin-bottom: 3rem;
+            }
+
+            .transaction-details, .product-info, .next-steps, .support-section {
+                background: var(--card-bg);
+                padding: 2rem;
+                border-radius: var(--border-radius-lg);
+                margin-bottom: 2rem;
+                border: 1px solid var(--border-color);
+                text-align: left;
+            }
+
+            .transaction-details h3, .product-info h3, .next-steps h3, .support-section h3 {
+                color: var(--text-primary);
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+                text-align: center;
+            }
+
+            .detail-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.75rem 0;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .detail-item:last-child {
+                border-bottom: none;
+            }
+
+            .detail-label {
+                color: var(--text-light);
+                font-weight: 500;
+            }
+
+            .detail-value {
+                color: var(--text-primary);
+                font-weight: 600;
+            }
+
+            .detail-value.success {
+                color: var(--success-color);
+            }
+
+            .product-card {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                padding: 1rem;
+                background: var(--darker-bg);
+                border-radius: var(--border-radius);
+                border: 1px solid var(--border-color);
+            }
+
+            .product-icon {
+                width: 60px;
+                height: 60px;
+                background: var(--primary-color);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+
+            .product-icon i {
+                font-size: 1.5rem;
+                color: white;
+            }
+
+            .product-details h4 {
+                color: var(--text-primary);
+                margin-bottom: 0.5rem;
+            }
+
+            .product-details p {
+                color: var(--text-light);
+            }
+
+            .steps-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .step-card {
+                display: flex;
+                align-items: flex-start;
+                gap: 1rem;
+                padding: 1.5rem;
+                background: var(--darker-bg);
+                border-radius: var(--border-radius);
+                border: 1px solid var(--border-color);
+            }
+
+            .step-number {
+                width: 40px;
+                height: 40px;
+                background: var(--primary-color);
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                flex-shrink: 0;
+            }
+
+            .step-content h4 {
+                color: var(--text-primary);
+                margin-bottom: 0.5rem;
+            }
+
+            .step-content p {
+                color: var(--text-light);
+                font-size: 0.9rem;
+            }
+
+            .support-section p {
+                text-align: center;
+                color: var(--text-light);
+                margin-bottom: 2rem;
+            }
+
+            .support-options {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .support-option {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                padding: 1rem;
+                background: var(--darker-bg);
+                color: var(--text-light);
+                text-decoration: none;
+                border-radius: var(--border-radius);
+                border: 1px solid var(--border-color);
+                transition: var(--transition);
+            }
+
+            .support-option:hover {
+                background: var(--primary-color);
+                color: white;
+                transform: translateY(-2px);
+            }
+
+            .support-option i {
+                font-size: 1.2rem;
+                flex-shrink: 0;
+            }
+
+            .action-buttons {
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                margin: 3rem 0 2rem;
+                flex-wrap: wrap;
+            }
+
+            .receipt-section {
+                background: var(--darker-bg);
+                padding: 1.5rem;
+                border-radius: var(--border-radius);
+                border: 1px solid var(--border-color);
+                text-align: center;
+            }
+
+            .receipt-section h4 {
+                color: var(--text-primary);
+                margin-bottom: 1rem;
+            }
+
+            .receipt-section p {
+                color: var(--text-light);
+            }
+
+            .receipt-section a {
+                color: var(--primary-color);
+                text-decoration: none;
+            }
+
+            .receipt-section a:hover {
+                text-decoration: underline;
+            }
+
+            .email-reminder {
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: var(--card-bg);
+                border: 1px solid var(--border-color);
+                border-radius: var(--border-radius);
+                padding: 1rem;
+                box-shadow: var(--shadow);
+                z-index: 10000;
+                max-width: 350px;
+                animation: slideInRight 0.3s ease;
+            }
+
+            .reminder-content {
+                display: flex;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .reminder-content i {
+                color: var(--primary-color);
+                font-size: 1.5rem;
+                margin-top: 0.25rem;
+                flex-shrink: 0;
+            }
+
+            .reminder-content strong {
+                color: var(--text-primary);
+                display: block;
+                margin-bottom: 0.25rem;
+            }
+
+            .reminder-content p {
+                color: var(--text-light);
+                font-size: 0.9rem;
+                margin: 0;
+            }
+
+            .reminder-content button {
+                background: none;
+                border: none;
+                color: var(--text-light);
+                cursor: pointer;
+                padding: 0.25rem;
+                border-radius: 4px;
+                transition: var(--transition);
+                flex-shrink: 0;
+            }
+
+            .reminder-content button:hover {
+                background: var(--error-color);
+                color: white;
+            }
+
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .success-content h1 {
+                    font-size: 2rem;
+                }
+
+                .success-icon {
+                    width: 80px;
+                    height: 80px;
+                }
+
+                .success-icon i {
+                    font-size: 2.5rem;
+                }
+
+                .steps-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .support-options {
+                    grid-template-columns: 1fr;
+                }
+
+                .action-buttons {
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                .detail-item {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 0.5rem;
+                }
+
+                .product-card {
+                    flex-direction: column;
+                    text-align: center;
+                }
+
+                .step-card {
+                    flex-direction: column;
+                    text-align: center;
+                }
+            }
+        `;
+
+        // Add custom styles to page
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = successStyles;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>
