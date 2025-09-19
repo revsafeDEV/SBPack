@@ -100,6 +100,21 @@ class AuthManager {
             return;
         }
 
+        // Sprawdzenie czy zaakceptował regulamin
+        if (typeof termsManager !== 'undefined' && !termsManager.hasAcceptedTerms()) {
+            try {
+                const accepted = await termsManager.showAcceptanceModal();
+                if (!accepted) {
+                    showNotification('Rejestracja anulowana - musisz zaakceptować regulamin', 'info');
+                    return;
+                }
+            } catch (error) {
+                console.error('Terms acceptance error:', error);
+                showNotification('Błąd podczas akceptacji regulaminu', 'error');
+                return;
+            }
+        }
+
         try {
             // Symulacja rejestracji - w rzeczywistości byłaby to obsługa przez API
             const user = await this.registerUser(userData);

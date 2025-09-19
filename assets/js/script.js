@@ -711,6 +711,15 @@ class ModsManager {
         ].filter(Boolean).join(' ');
         
         card.className = cardClasses;
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', (e) => {
+            // Pomiń kliknięcie jeśli kliknięto przycisk
+            if (e.target.closest('.btn') || e.target.closest('button') || e.target.closest('a')) {
+                return;
+            }
+            showModPreview(mod.id);
+        });
+        
         card.innerHTML = `
             <div class="mod-status status-${mod.status.replace('-', '')}">
                 ${this.getStatusText(mod.status)}
@@ -731,9 +740,9 @@ class ModsManager {
                 <img src="${mod.image}" alt="${mod.name}">
                 <div class="mod-overlay">
                     <div class="mod-buttons">
-                        <button class="btn btn-preview" onclick="showModal('${mod.name}')">
+                        <button class="btn btn-preview" onclick="showModPreview('${mod.id}')">
                             <i class="fas fa-eye"></i>
-                            Podgląd
+                            Szczegóły
                         </button>
                         ${this.createActionButton(mod)}
                     </div>
