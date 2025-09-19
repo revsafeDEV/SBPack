@@ -1,18 +1,20 @@
 // Smooth scroll dla linków nawigacji
 document.addEventListener('DOMContentLoaded', function() {
-    // Navbar scroll effect
-    const header = document.querySelector('.header');
-    const navLinks = document.querySelectorAll('.nav-link');
+    // Navbar scroll effect - support both old and new header classes
+    const header = document.querySelector('.header, .modern-header');
+    const navLinks = document.querySelectorAll('.nav-link, .nav-item');
     
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
-            header.style.background = 'rgba(11, 12, 16, 0.98)';
-            header.style.padding = '0.75rem 0';
-        } else {
-            header.style.background = 'rgba(11, 12, 16, 0.95)';
-            header.style.padding = '1rem 0';
-        }
-    });
+    if (header) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(10, 10, 10, 0.95)';
+                header.style.backdropFilter = 'blur(20px) saturate(150%)';
+            } else {
+                header.style.background = 'rgba(10, 10, 10, 0.8)';
+                header.style.backdropFilter = 'blur(20px) saturate(150%)';
+            }
+        });
+    }
 
     // Active navigation link
     const sections = document.querySelectorAll('section[id]');
@@ -56,21 +58,41 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Mobile menu toggle
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const nav = document.querySelector('.nav');
+    // Mobile menu toggle - support both old and new menu
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn, .mobile-menu-toggle');
+    const nav = document.querySelector('.nav, .modern-nav');
     
-    if (mobileMenuBtn) {
+    if (mobileMenuBtn && nav) {
         mobileMenuBtn.addEventListener('click', () => {
-            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
-            nav.style.position = 'absolute';
-            nav.style.top = '100%';
-            nav.style.left = '0';
-            nav.style.right = '0';
-            nav.style.background = 'var(--darker-bg)';
-            nav.style.flexDirection = 'column';
-            nav.style.padding = '1rem';
-            nav.style.borderRadius = '0 0 20px 20px';
+            nav.classList.toggle('mobile-active');
+            mobileMenuBtn.classList.toggle('active');
+            
+            // Add mobile styles if not using CSS classes
+            if (nav.classList.contains('mobile-active')) {
+                nav.style.display = 'flex';
+                nav.style.position = 'absolute';
+                nav.style.top = '100%';
+                nav.style.left = '0';
+                nav.style.right = '0';
+                nav.style.background = 'rgba(10, 10, 10, 0.95)';
+                nav.style.backdropFilter = 'blur(20px)';
+                nav.style.flexDirection = 'column';
+                nav.style.padding = '1rem';
+                nav.style.borderRadius = '0 0 20px 20px';
+                nav.style.zIndex = '999';
+            } else {
+                nav.style.display = '';
+                nav.style.position = '';
+                nav.style.top = '';
+                nav.style.left = '';
+                nav.style.right = '';
+                nav.style.background = '';
+                nav.style.backdropFilter = '';
+                nav.style.flexDirection = '';
+                nav.style.padding = '';
+                nav.style.borderRadius = '';
+                nav.style.zIndex = '';
+            }
         });
     }
 
@@ -695,7 +717,7 @@ class ModsManager {
     }
     
     generatePayPalLink(mod) {
-        const paypalEmail = 'revsafe777@gmail.com';
+        const paypalEmail = 'osipiuksebastian3@gmail.com';
         const amount = mod.price.toFixed(2);
         const currency = 'PLN';
         const itemName = encodeURIComponent(mod.name);

@@ -357,31 +357,35 @@
 
     <script src="../assets/js/script.js"></script>
     <script>
-        // Filter functionality
+        // Filter functionality - improved version
         document.addEventListener('DOMContentLoaded', function() {
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const modCards = document.querySelectorAll('.mod-card');
-
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const filter = this.getAttribute('data-filter');
-                    
-                    // Remove active class from all buttons
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    // Add active class to clicked button
-                    this.classList.add('active');
-                    
-                    // Filter mods
-                    setTimeout(() => {
-                        const allMods = modsManager.getAllMods();
-                        const filteredMods = filterMods(allMods, filter);
-                        renderFilteredMods(filteredMods);
-                    }, 100);
+            // Wait for modsManager to be ready
+            setTimeout(() => {
+                const filterButtons = document.querySelectorAll('.modern-filter-btn, .filter-btn');
+                
+                filterButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const filter = this.getAttribute('data-filter');
+                        
+                        // Remove active class from all buttons
+                        filterButtons.forEach(btn => btn.classList.remove('active'));
+                        // Add active class to clicked button
+                        this.classList.add('active');
+                        
+                        // Filter mods
+                        if (typeof modsManager !== 'undefined') {
+                            const allMods = modsManager.getAllMods();
+                            const filteredMods = filterMods(allMods, filter);
+                            renderFilteredMods(filteredMods);
+                            updateFilterCounts();
+                        }
+                    });
                 });
-            });
 
-            // Update stats
-            updateStats();
+                // Update stats and counts on page load
+                updateStats();
+                updateFilterCounts();
+            }, 1000);
         });
 
         function filterMods(mods, filter) {
@@ -405,63 +409,129 @@
         }
 
         function updateStats() {
+            if (typeof modsManager === 'undefined') return;
+            
             setTimeout(() => {
                 const allMods = modsManager.getAllMods();
                 const totalDownloads = allMods.reduce((sum, mod) => sum + mod.downloads, 0);
                 
-                document.getElementById('totalDownloads').textContent = totalDownloads.toLocaleString();
-                document.getElementById('totalMods').textContent = allMods.length;
+                const totalDownloadsEl = document.getElementById('totalDownloads');
+                const totalModsEl = document.getElementById('totalMods');
+                
+                if (totalDownloadsEl) totalDownloadsEl.textContent = totalDownloads.toLocaleString();
+                if (totalModsEl) totalModsEl.textContent = allMods.length;
             }, 500);
         }
-
-        // Add search functionality specific to mods page
-        document.addEventListener('DOMContentLoaded', function() {
-            const container = document.querySelector('.mods-section .container');
-            const title = container.querySelector('h1');
+        
+        function updateFilterCounts() {
+            if (typeof modsManager === 'undefined') return;
             
-            const searchInput = document.createElement('input');
-            searchInput.type = 'text';
-            searchInput.placeholder = 'Szukaj modów...';
-            searchInput.className = 'search-input';
-            searchInput.style.cssText = `
-                padding: 0.75rem 1rem;
-                border: 2px solid var(--primary-color);
-                border-radius: 25px;
-                background: var(--darker-bg);
-                color: var(--text-light);
-                font-size: 1rem;
-                margin: 2rem auto;
-                width: 100%;
-                max-width: 400px;
-                display: block;
-            `;
+            const allMods = modsManager.getAllMods();
+            const categories = ['all', 'skrypty', 'pojazdy', 'mapy', 'skins', 'free'];
             
-            // Insert after description
-            const description = container.querySelector('.section-description');
-            description.insertAdjacentElement('afterend', searchInput);
-            
-            searchInput.addEventListener('input', (e) => {
-                const searchTerm = e.target.value.toLowerCase();
-                const modCards = document.querySelectorAll('.mod-card');
-                
-                modCards.forEach(card => {
-                    const titleElement = card.querySelector('h3');
-                    const descriptionElement = card.querySelector('p');
-                    
-                    if (!titleElement || !descriptionElement) return;
-                    
-                    const title = titleElement.textContent.toLowerCase();
-                    const description = descriptionElement.textContent.toLowerCase();
-                    
-                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                        card.style.display = 'block';
-                        card.style.animation = 'fadeInUp 0.3s ease-out';
+            categories.forEach(category => {
+                const badge = document.querySelector(`[data-count="${category}"]`);
+                if (badge) {
+                    let count = 0;
+                    if (category === 'all') {
+                        count = allMods.length;
+                    } else if (category === 'free') {
+                        count = allMods.filter(mod => mod.price === 0).length;
                     } else {
-                        card.style.display = 'none';
+                        count = allMods.filter(mod => mod.category === category).length;
                     }
-                });
+                    badge.textContent = count;
+                }
             });
+        }
+
+        // Enhanced search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Use existing modern search input if available
+            const existingSearchInput = document.getElementById('modsSearchInput');
+            let searchInput = existingSearchInput;
+            
+            // If no modern search input, create fallback
+            if (!existingSearchInput) {
+                const container = document.querySelector('.modern-mods-section .mods-container, .mods-section .container');
+                if (container) {
+                    searchInput = document.createElement('input');
+                    searchInput.type = 'text';
+                    searchInput.placeholder = 'Szukaj modów...';
+                    searchInput.className = 'modern-search-input';
+                    searchInput.id = 'modsSearchInput';
+                    searchInput.style.cssText = `
+                        padding: 0.75rem 1rem;
+                        border: 2px solid rgba(102, 126, 234, 0.5);
+                        border-radius: 25px;
+                        background: rgba(255, 255, 255, 0.05);
+                        color: #ffffff;
+                        font-size: 1rem;
+                        margin: 2rem auto;
+                        width: 100%;
+                        max-width: 400px;
+                        display: block;
+                        backdrop-filter: blur(10px);
+                    `;
+                    
+                    const description = container.querySelector('.mods-description, .section-description');
+                    if (description) {
+                        description.insertAdjacentElement('afterend', searchInput);
+                    } else {
+                        container.insertBefore(searchInput, container.firstChild);
+                    }
+                }
+            }
+            
+            if (searchInput) {
+                // Clear button functionality
+                const clearBtn = document.getElementById('searchClearBtn');
+                if (clearBtn) {
+                    clearBtn.addEventListener('click', () => {
+                        searchInput.value = '';
+                        performSearch('');
+                    });
+                }
+                
+                searchInput.addEventListener('input', (e) => {
+                    performSearch(e.target.value);
+                });
+            }
         });
+        
+        function performSearch(searchTerm) {
+            const term = searchTerm.toLowerCase();
+            const modCards = document.querySelectorAll('.mod-card');
+            let visibleCount = 0;
+            
+            modCards.forEach(card => {
+                const titleElement = card.querySelector('h3');
+                const descriptionElement = card.querySelector('p');
+                
+                if (!titleElement || !descriptionElement) return;
+                
+                const title = titleElement.textContent.toLowerCase();
+                const description = descriptionElement.textContent.toLowerCase();
+                
+                if (!term || title.includes(term) || description.includes(term)) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeInUp 0.3s ease-out';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Update filter count
+            const filterCount = document.getElementById('filterCount');
+            if (filterCount) {
+                if (term) {
+                    filterCount.textContent = `${visibleCount} wyników dla "${searchTerm}"`;
+                } else {
+                    filterCount.textContent = 'Wszystkie mody';
+                }
+            }
+        }
 
         // Custom styles for mods page
         const customStyles = `
